@@ -36,7 +36,7 @@
 </div>
 <div class="content-1 features">
   <div class="container">
-    <div class="row gx-5">
+    <div class="row">
       <div class="col-md-4 feature">
         <div class="shadow pt-4 pb-2 px-4 bg-white rounded h-100 w-100 d-inline-block">
           <?php get_frontpage_feature( 1 ); ?>

@@ -1,0 +1,37 @@
+.post-list {
+    a,
+    a:active,
+    a:hover,
+    a:visited {
+        text-decoration: none;
+        color: $color3;
+    }
+
+    h3 {
+        margin: 0 0 0 0 !important;
+        text-decoration: none;
+    }
+
+    img.post-stacked {
+        padding-bottom: 0.6rem;
+    }
+
+    p.post-datetime {
+        font-size: 0.8rem;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.single-post {
+    .featured-image {
+        padding-bottom: 1rem;
+    }
+}

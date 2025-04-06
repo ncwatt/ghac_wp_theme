@@ -50,6 +50,28 @@
   /*margin: 0 0 0 0;*/
 }
 
+.home-shop-now-container {
+  background-color: #ffffff;
+}
+.home-shop-now-container .shop-now {
+  background-image: url("../img/home-shop-now.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 650px;
+}
+.home-shop-now-container .shop-now .shop-now-text {
+  margin-top: 3em;
+  opacity: 0.85;
+  text-align: center;
+}
+.home-shop-now-container .shop-now hr {
+  background-image: linear-gradient(to right, #ffffff, #92d884, #92d884, #92d884, #ffffff);
+  border: 0;
+  height: 2px;
+  /*margin: 0 0 0 0;*/
+}
+
 body {
   background: #92d884;
   color: #4d4d4d;
@@ -95,12 +117,23 @@ a.club-button-1:hover {
 }
 
 a.club-button-2 {
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  color: #06B503;
+}
+
+a.club-button-2:hover {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+a.club-button-3 {
   background-color: #92d884;
   border: 1px solid #92d884;
   color: #ffffff;
 }
 
-a.club-button-2:hover {
+a.club-button-3:hover {
   background-color: #ffffff;
   color: #92d884;
 }
@@ -112,6 +145,27 @@ button.icon-button, button.icon-button:active, button.icon-button:hover, button.
 
 h1 {
   font-family: "Heebo", sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+h2 {
+  font-family: "Heebo", sans-serif;
+  font-weight: 200;
+}
+
+h3 {
+  font-family: "Heebo", sans-serif;
+  font-weight: 200;
+}
+
+h4 {
+  font-family: "Heebo", sans-serif;
+  font-weight: 200;
+}
+
+h5 {
+  font-family: "Heebo", sans-serif;
   font-weight: 200;
 }
 
@@ -120,6 +174,12 @@ h6 {
   font-size: 1.25em;
   font-weight: 200;
   margin: 0 0 0 0;
+}
+
+p.synopsis {
+  font-family: "Heebo", sans-serif;
+  font-size: 1.25em;
+  font-weight: 200;
 }
 
 .contentm {
@@ -134,12 +194,93 @@ h6 {
   background-color: #dfdfdf;
 }
 
+.content-block {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.page-padding {
+  padding-top: 4em;
+  padding-bottom: 3em;
+}
+
 .content-pad-t {
   padding-top: 3em;
 }
 
 .content-pad-b {
   padding-bottom: 3em;
+}
+
+.easyfundraising {
+  padding: 1em 0;
+}
+.easyfundraising .small-banner p {
+  margin: 0;
+  padding: 0;
+}
+.easyfundraising .small-banner .generate-text p {
+  color: #ffffff;
+  font-size: 1.1em;
+  font-weight: 200;
+  text-align: center;
+}
+
+.google-maps {
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 75%;
+  position: relative;
+}
+.google-maps iframe {
+  height: 100% !important;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% !important;
+}
+
+.people h4 {
+  margin-bottom: 0px;
+}
+.people figure {
+  margin-top: 0 !important;
+  padding: 0;
+}
+.people .photo img {
+  border-radius: 50%;
+  min-width: 150px;
+  width: 150px;
+}
+
+.post-list a,
+.post-list a:active,
+.post-list a:hover,
+.post-list a:visited {
+  text-decoration: none;
+  color: #4d4d4d;
+}
+.post-list h3 {
+  margin: 0 0 0 0 !important;
+  text-decoration: none;
+}
+.post-list img.post-stacked {
+  padding-bottom: 0.6rem;
+}
+.post-list p.post-datetime {
+  font-size: 0.8rem;
+}
+.post-list ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.single-post .featured-image {
+  padding-bottom: 1rem;
 }
 
 .footer {

@@ -10,9 +10,10 @@
                     <p>NE3 2HY</p>
                     <ul class="follow-icons">
                         <!--<li><a href="#" class="fab fa-facebook-f"></a>&nbsp;</li>-->
-                        <li><a href="https://www.facebook.com/groups/165444858443/" target="_blank"><i class="bi bi-facebook"></i></a></li>
+                        <li><a href="https://www.facebook.com/profile.php?id=61570961411901" target="_blank"><i class="bi bi-facebook"></i></a></li>
                         <li><a href="https://twitter.com/Gosforth_HandAC" target="_blank"><i class="bi bi-twitter-x"></i></a></li>
                         <li><a href="https://www.instagram.com/gosforthharriers" target="_blank"><i class="bi bi-instagram"></i></a></li>
+                        <li><a href="https://www.strava.com/clubs/47387" target="_blank"><i class="bi bi-strava"></i></a></li>
                     </ul>
                 </div>
                 <div class="col-12 col-md-4 order-3 order-md-2">

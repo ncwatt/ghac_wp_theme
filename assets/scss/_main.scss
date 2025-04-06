@@ -43,12 +43,23 @@ a.club-button-1:hover {
 }
 
 a.club-button-2 {
+    background-color: $color1;
+    border: 1px solid $color1;
+    color: $color2;
+}
+
+a.club-button-2:hover {
+    background-color: transparent;
+    color: $color1;
+}
+
+a.club-button-3 {
     background-color: $color0;
     border: 1px solid $color0;
     color: $color1;
 }
 
-a.club-button-2:hover {
+a.club-button-3:hover {
     background-color: $color1;
     color: $color0;
 }
@@ -60,6 +71,27 @@ button.icon-button, button.icon-button:active, button.icon-button:hover, button.
 
 h1 {
     font-family: $font-headings;
+    font-size: 2rem;
+    font-weight: 200;
+}
+
+h2 {
+    font-family: $font-headings;
+    font-weight: 200;
+}
+
+h3 {
+    font-family: $font-headings;
+    font-weight: 200;
+}
+
+h4 {
+    font-family: $font-headings;
+    font-weight: 200;
+}
+
+h5 {
+    font-family: $font-headings;
     font-weight: 200;
 }
 
@@ -68,6 +100,12 @@ h6 {
     font-size: 1.25em;
     font-weight: 200;
     margin: 0 0 0 0;
+}
+
+p.synopsis {
+    font-family: $font-headings;
+    font-size: 1.25em;
+    font-weight: 200;
 }
 
 .contentm {
@@ -82,10 +120,53 @@ h6 {
     background-color: $color4;
 }
 
+.content-block {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+
+.page-padding {
+    padding-top: 4em;
+    padding-bottom: 3em;
+}
+
 .content-pad-t{
     padding-top: 3em;
 }
 
 .content-pad-b {
     padding-bottom: 3em;
+}
+
+.easyfundraising {
+    padding: 1em 0;
+    .small-banner {
+        p {
+            margin: 0;
+            padding: 0;
+        }
+        .generate-text {
+            p {
+                color: $color1;
+                font-size: 1.1em;
+                font-weight: 200;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.google-maps {
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 75%; // This is the aspect ratio
+    position: relative;
+    
+    iframe {
+        height: 100% !important;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100% !important;
+    }
 }

@@ -31,3 +31,28 @@
         }
     }
 }
+
+.home-shop-now-container {
+    background-color: #ffffff;
+
+    .shop-now{
+        background-image: url('../img/home-shop-now.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 650px;
+
+        .shop-now-text {
+            margin-top: 3em;
+            opacity: 0.85;
+            text-align: center;
+        }
+
+        hr {
+            background-image: linear-gradient(to right, $color1, $color0, $color0, $color0, $color1);
+            border: 0;
+            height: 2px;
+            /*margin: 0 0 0 0;*/
+        }
+    }
+}

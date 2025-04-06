@@ -1,6 +1,6 @@
 <?php 
 /*
-	Template Name: Shop Page
+	Template Name:  Page (no title)
 */
 ?>
 <?php get_header(); ?>
