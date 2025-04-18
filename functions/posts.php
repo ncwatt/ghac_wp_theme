@@ -14,16 +14,16 @@ function ghac_estimated_read_time( $content ) {
     $wordCount = str_word_count( strip_tags( $content ) );
     $readingSpeed = 200; // Average reading speed in word per minute
     $readTime = ceil( $wordCount / $readingSpeed );
-    return $readTime . ' minute read';
+    return $readTime > 1 ? $readTime . ' minutes' : $readTime . ' minute';
 }
 
-function ghac_posts_list_post( $col_class, $thumb_class, $post_class, $link, $title, $thumbnail, $post_time, $excerpt, $author, $comments, $readtime ) {
+function ghac_posts_list_post( $col_class, $col_class_notlast, $thumb_class, $post_class, $link, $title, $thumbnail, $post_time, $excerpt, $author, $comments, $readtime ) {
     // String to hold the HTML markup to return
     $htmlOutput = "";
     // String to hold the closing tags
     $htmlClosing = "";
     // Add the column to hold the post
-    $htmlOutput .= "<div class=\"" . $col_class . "\">";
+    $htmlOutput .= "<div class=\"" . $col_class . ( $col_class_notlast != "" ? " " : "" ) . $col_class_notlast . "\">";
     $htmlClosing = "</div>" . $htmlClosing;
     // Add a row within the column
     $htmlOutput .= "<div class=\"row\">";
@@ -37,14 +37,13 @@ function ghac_posts_list_post( $col_class, $thumb_class, $post_class, $link, $ti
     // Wrap the post data in an anchor tag
     $htmlOutput .= "<a href=\"" . $link . "\">";
     // Display the title of the post, date/time and the excerpt
-    $htmlOutput .= "<h3>" . $title . "</h3><p class=\"post-datetime\">" . $post_time . "</p><p>" . $excerpt . "</p>";
+    $htmlOutput .= "<h3>" . $title . "</h3><p class=\"post-datetime\">" . $post_time . " | Read Time: " . $readtime . "</p><p>" . $excerpt . "</p>";
     // Close the anchor tag
     $htmlOutput .= "</a>";
     // Display some post meta data
     $htmlOutput .= "<ul class=\"postdetails\">";
     $htmlOutput .= "<li><i class=\"bi bi-person-circle\"></i> " . $author . " |&nbsp;</li>";
-    $htmlOutput .= "<li><i class=\"bi bi-chat\"></i> " . $comments . " comments|&nbsp;</li>";
-    $htmlOutput .= "<li><i class=\"bi bi-eyeglasses\"></i> " . $readtime . "</li>";
+    $htmlOutput .= "<li><i class=\"bi bi-chat\"></i> " . $comments . " comments</li>";
     $htmlOutput .= "</ul>";
     // Close the post column
     $htmlOutput .= "</div>";
@@ -64,6 +63,7 @@ function ghac_posts_list( $attributes, $content = null ) {
             'container_fluid' => "false",
             'heading' => "",
             'col_class' => "",
+            'col_class_notlast' => "",
             'thumbnail_class' => "",
             'post_class' => "",
             'show_latest' => "false",
@@ -147,7 +147,8 @@ function ghac_posts_list( $attributes, $content = null ) {
                 // Add the post
                 $htmlOutput .= ghac_posts_list_post( 
                     $section == 0 ? esc_attr( $atts[ 'latest_col_class'] ) : esc_attr( $atts[ 'col_class'] ),
-                    $section == 0 ? esc_attr( $atts[ 'latest_thumbnail_class'] ) : esc_attr( $atts[ 'thumbnail_class'] ),
+                    ( ( $section == 1 ) && ( $colCount < esc_attr( $atts['cols'] ) - 1 ) ) ? esc_attr( $atts[ 'col_class_notlast'] ) : "" ,
+                    $section == 0 ? esc_attr( $atts[ 'latest_thumbnail_class'] ) : esc_attr( $atts[ 'thumbnail_class'] ) ,
                     $section == 0 ? esc_attr( $atts[ 'latest_post_class'] ) : esc_attr( $atts[ 'post_class'] ),
                     get_the_permalink(),
                     get_the_title(),

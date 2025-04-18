@@ -17,7 +17,7 @@
 		            <?php endwhile; ?>
                 <?php endif; ?>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 pt-4 pt-lg-0">
                 <?php dynamic_sidebar( 'club-records-widget' ); ?>
             </div>
         </div>

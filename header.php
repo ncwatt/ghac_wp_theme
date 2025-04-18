@@ -43,6 +43,7 @@
                     }
                 ?>
             </div>
+            <?php //echo do_blocks( '<!-- wp:woocommerce/mini-cart {"addToCartBehaviour":"open_drawer","productCountVisibility":"always"} /-->' ); ?>
         </div>
     </nav>
 </header>

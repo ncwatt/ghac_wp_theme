@@ -72,6 +72,15 @@
   /*margin: 0 0 0 0;*/
 }
 
+.sponsors {
+  vertical-align: middle;
+}
+.sponsors img {
+  margin: auto 0 auto 0;
+  max-width: 150px;
+  max-height: 150px;
+}
+
 body {
   background: #92d884;
   color: #4d4d4d;
@@ -282,6 +291,13 @@ p.synopsis {
 .single-post .featured-image {
   padding-bottom: 1rem;
 }
+.single-post h1 {
+  margin: 0 0 0 0 !important;
+  text-decoration: none;
+}
+.single-post p.post-datetime {
+  font-size: 0.8rem;
+}
 
 .footer {
   padding: 1em 0 1em 0;
@@ -294,6 +310,12 @@ p.synopsis {
 }
 .footer .affiliates img {
   margin: 0 1em 1em 0;
+}
+.footer .affiliates img.jra {
+  width: 120px;
+}
+.footer .affiliates img.malone {
+  width: 180px;
 }
 .footer .affiliates .small-logo {
   height: 50px;

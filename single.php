@@ -15,7 +15,7 @@
                                     <img src="<?php echo get_template_directory_uri() . "/assets/img/default-post-image.jpg" ?>" class="img-fluid featured-image" alt="<?php echo the_title(); ?>" />
                                 <?php endif; ?>
                                 <h1><?php the_title(); ?></h1>
-                                <p class="">Posted: <?php echo get_post_time('d M Y H:i'); ?></p>
+                                <p class="post-datetime">Posted: <?php echo get_post_time('d M Y H:i'); ?> | Read Time: <?php echo ghac_estimated_read_time( get_the_content() ); ?></p>
                                 <?php the_content(); ?>
 		                    <?php endwhile; ?>
                             <div class="row">
