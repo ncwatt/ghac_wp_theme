@@ -108,8 +108,16 @@ p.synopsis {
     font-weight: 200;
 }
 
-.contentm {
-    background-color: $color1;
+.accordion-header {
+    .accordion-button {
+        background-color: $color5;
+    }
+
+    .collapsed {
+        background-color: $color1;
+    }
+
+    
 }
 
 .content-1 {
@@ -120,9 +128,20 @@ p.synopsis {
     background-color: $color4;
 }
 
+.content-5 {
+    background-color: $color5;
+}
+
 .content-block {
     padding-top: 3em;
     padding-bottom: 3em;
+}
+
+.content-feature {
+    padding-top: 1em;
+    padding-right: 1.2em;
+    padding-bottom: 1em;
+    padding-left: 1.2em;
 }
 
 .page-padding {

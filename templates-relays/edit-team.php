@@ -8,19 +8,19 @@ if ( ( ! is_user_logged_in() )  && ( ! isset( $_SESSION['relays_user_email'] ) )
 // Determine if the user is an administrator or not
 $user = wp_get_current_user();
 if ( is_user_in_role( 'administrator' ) ) { $isAdmin = true; } else { $isAdmin = false; }
-if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsciber = false; }
+if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubscriber = false; }
 
 // Get the TeamID from the QueryString. If there isn't one then leave the page.
 if ( isset( $_GET['teamid'] ) ) { 
 	$teamID = $_GET['teamid'];
 	if ( $isAdmin || $isSubscriber ) :
-		$team = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamID = %d", $teamID ) );
+		$team = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamID = %d", $teamID ) );
 	else:
 		$team = $wpdb->get_row( $wpdb->prepare( 
-			"SELECT * FROM {$wpdb->prefix}ghac_c_teams " . 
-					"INNER JOIN {$wpdb->prefix}ghac_c_teamemails ON {$wpdb->prefix}ghac_c_teams.TeamID = {$wpdb->prefix}ghac_c_teamemails.TeamID " .
-					"INNER JOIN {$wpdb->prefix}ghac_c_emails ON {$wpdb->prefix}ghac_c_teamemails.EmailID = {$wpdb->prefix}ghac_c_emails.EmailID " .
-				"WHERE {$wpdb->prefix}ghac_c_teams.TeamID = %d AND {$wpdb->prefix}ghac_c_emails.EmailAddress = %s", array( $teamID, $_SESSION['relays_user_email'] )
+			"SELECT * FROM {$wpdb->prefix}ghac_sr25_teams " . 
+					"INNER JOIN {$wpdb->prefix}ghac_sr25_teamemails ON {$wpdb->prefix}ghac_sr25_teams.TeamID = {$wpdb->prefix}ghac_sr25_teamemails.TeamID " .
+					"INNER JOIN {$wpdb->prefix}ghac_sr25_emails ON {$wpdb->prefix}ghac_sr25_teamemails.EmailID = {$wpdb->prefix}ghac_sr25_emails.EmailID " .
+				"WHERE {$wpdb->prefix}ghac_sr25_teams.TeamID = %d AND {$wpdb->prefix}ghac_sr25_emails.EmailAddress = %s", array( $teamID, $_SESSION['relays_user_email'] )
 			) 
 		);
 	endif;
@@ -37,18 +37,21 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" ) {
 	$teamStatus = $team->TeamStatus;
 	$clubName = $team->ClubName;
 	$category = $team->Category;
-	$runnerAName = $team->RunnerA;
-	$runnerACategory = $team->RunnerACategory;
+	$runnerAFirstName = $team->RunnerAFirstName;
+	$runnerALastName = $team->RunnerALastName;
+	$runnerAGender = $team->RunnerAGender;
 	$runnerAAge = $team->RunnerAAge;
 	$runnerATime = $team->RunnerATime;
 	$runnerALegTime = $team->RunnerALegTime;
-	$runnerBName = $team->RunnerB;
-	$runnerBCategory = $team->RunnerBCategory;
+	$runnerBFirstName = $team->RunnerBFirstName;
+	$runnerBLastName = $team->RunnerBLastName;
+	$runnerBGender = $team->RunnerBGender;
 	$runnerBAge = $team->RunnerBAge;
 	$runnerBTime = $team->RunnerBTime;
 	$runnerBLegTime = $team->RunnerBLegTime;
-	$runnerCName = $team->RunnerC;
-	$runnerCCategory = $team->RunnerCCategory;
+	$runnerCFirstName = $team->RunnerCFirstName;
+	$runnerCLastName = $team->RunnerCLastName;
+	$runnerCGender = $team->RunnerCGender;
 	$runnerCAge = $team->RunnerCAge;
 	$runnerCTime = $team->RunnerCTime;
 	$runnerCLegTime = $team->RunnerCLegTime;
@@ -63,21 +66,25 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 		$teamStatus = $isAdmin ? form_input_checks( $_POST['teamStatus'] ) : form_input_checks( $_POST['teamStatusH'] );
 		$category = form_input_checks( $_POST["category"] );
 		$clubName = form_input_checks( $_POST['clubName'] );
-		$runnerAName = form_input_checks( $_POST['runnerAName'] );
-		$runnerACategory = form_input_checks( $_POST['runnerACategory'] );
+		$runnerAFirstName = form_input_checks( $_POST['runnerAFirstName'] );
+		$runnerALastName = form_input_checks( $_POST['runnerALastName'] );
+		$runnerAGender = form_input_checks( $_POST['runnerAGender'] );
 		$runnerAAge = form_input_checks( $_POST['runnerAAge'] );
 		$runnerATime = $isAdmin ? form_input_checks( $_POST['runnerATime'] ) : form_input_checks( $_POST['runnerATimeH'] );
 		$runnerALegTime = form_input_checks( $_POST['runnerALegTime'] );
-		$runnerBName = form_input_checks( $_POST['runnerBName'] );
-		$runnerBCategory = form_input_checks( $_POST['runnerBCategory'] );
+		$runnerBFirstName = form_input_checks( $_POST['runnerBFirstName'] );
+		$runnerBLastName = form_input_checks( $_POST['runnerBLastName'] );
+		$runnerBGender = form_input_checks( $_POST['runnerBGender'] );
 		$runnerBAge = form_input_checks( $_POST['runnerBAge'] );
 		$runnerBTime = $isAdmin ? form_input_checks( $_POST['runnerBTime'] ) : form_input_checks( $_POST['runnerBTimeH'] );
 		$runnerBLegTime = form_input_checks( $_POST['runnerBLegTime'] );
-		$runnerCName = form_input_checks( $_POST['runnerCName'] );
-		$runnerCCategory = form_input_checks( $_POST['runnerCCategory'] );
+		$runnerCFirstName = form_input_checks( $_POST['runnerCFirstName'] );
+		$runnerCLastName = form_input_checks( $_POST['runnerCLastName'] );
+		$runnerCGender = form_input_checks( $_POST['runnerCGender'] );
 		$runnerCAge = form_input_checks( $_POST['runnerCAge'] );
 		$runnerCTime = $isAdmin ? form_input_checks( $_POST['runnerCTime'] ) : form_input_checks( $_POST['runnerCTimeH'] );
 		$runnerCLegTime = form_input_checks( $_POST['runnerCLegTime'] );
+		//$teamTime = form_input_checks( $_POST['teamTime'] );
 		$firstName = form_input_checks( $_POST["firstName"] );
 		$lastName = form_input_checks( $_POST["lastName"] );
 		$email = form_input_checks( $_POST["emailAddress"] );
@@ -86,7 +93,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 		foreach ( $_POST as $postItemName => $postItemValue ) {
 			if ( substr( $postItemName, 0, 8 ) == 'delEmail' ) {
 				$delEmailArray = explode( ';', $postItemValue );
-				$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}ghac_c_teamemails WHERE TeamID = %d AND EmailID = %d;", array( $teamID, $delEmailArray[0] ) ) );
+				$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}ghac_sr25_teamemails WHERE TeamID = %d AND EmailID = %d;", array( $teamID, $delEmailArray[0] ) ) );
 				if ( empty( $wpdb->last_error ) ) {
 					$delEmailToast = $delEmailArray[1] . ' has been deleted from the team.';	
 				} else {
@@ -131,10 +138,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 			if ( $contactSuccess ) {
 				// Check if the email address is already in the table
-				$emailID = $wpdb->get_var( $wpdb->prepare( "SELECT EmailID FROM {$wpdb->prefix}ghac_c_emails WHERE EmailAddress = %s", $email ) );
+				$emailID = $wpdb->get_var( $wpdb->prepare( "SELECT EmailID FROM {$wpdb->prefix}ghac_sr25_emails WHERE EmailAddress = %s", $email ) );
 				if ( ! isset( $emailID ) ) {
 					// Insert the email into the table
-					$wpdb->insert( "{$wpdb->prefix}ghac_c_emails", array(
+					$wpdb->insert( "{$wpdb->prefix}ghac_sr25_emails", array(
 						'EmailAddress' => $email,
 						'FirstName' => $firstName,
 						'LastName' => $lastName
@@ -144,7 +151,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 				} else {
 					// Update the name and last name for the email address supplied
 					$wpdb->update( 
-						"{$wpdb->prefix}ghac_c_emails", 
+						"{$wpdb->prefix}ghac_sr25_emails", 
 						array(
 							'FirstName' => $firstName,
 							'LastName' => $lastName
@@ -156,7 +163,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 				}
 	
 				// Insert link the team and the email address
-				$wpdb->insert( "{$wpdb->prefix}ghac_c_teamemails", 
+				$wpdb->insert( "{$wpdb->prefix}ghac_sr25_teamemails", 
 					array(
 						'TeamID' => $teamID,
 						'EmailID' => $emailID
@@ -167,13 +174,13 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 				$emailSubject = 'Gosforth Harriers Summer Relays - Club Contact: ' . $teamName;
             	$emailBody = 'Hi ' . $firstName;
             	$emailBody = $emailBody . '<br /><br />You have been added as a club contact for team ' . $teamName . ' which is running for ' . $clubName . ' in the Gosforth Summer Relays.';
-            	$emailBody = $emailBody . '<br /><br />We have introduced a registration process which puts you in control up until when you pick up your race numbers on Sunday 4th August 2024. At this stage the teams will be locked and you will need to speak to one of our amazing administration team to make any changes. ';
+            	$emailBody = $emailBody . '<br /><br />We have introduced a registration process which puts you in control up until when you pick up your race numbers on Sunday 3rd August 2025. At this stage the teams will be locked and you will need to speak to one of our amazing administration team to make any changes. ';
 				$emailBody = $emailBody . '<br /><br />To enable this we have built our very own team manager which will allow you to select the catgory for your team, update your runners, add additional admins and have some fun coming up with team names (let\'s keep them clean!).';
             	$emailBody = $emailBody . '<br /><br />To access the team manager click on the following link:';
             	$emailBody = $emailBody . '<br /><br /><a href="' . get_page_permalink_by_pageslug( 'summer-relays/teams-manager' ) . '">Go to the Gosforth Summer Relays Team Manager</a>';
 				$emailBody = $emailBody . '<br /><br />You may receive more emails similar to this depending on how many teams you are added to. We would never spam you, this is perfectly normal. It\'s just how our system works to get you registered with all of your teams. All you need is the link above to access the team manager which will allow you to administer all of your teams easily and conveniently.';
 				$emailBody = $emailBody . '<br /><br />If you experience any issues with the team manager, don\'t worry we won\'t run off and leave you behind (we\'ll keep that for the event). All you need to do is reply to this email and our webmaster will answer your query.';
-            	$emailBody = $emailBody . '<br /><br />For now, keep the training going! We look forward to seeing your teams on Sunday 4th August 2024.';
+            	$emailBody = $emailBody . '<br /><br />For now, keep the training going! We look forward to seeing your teams on Sunday 3rd August 2025.';
 				$emailBody = $emailBody . '<br /><br />Gosforth Harriers & AC';
 				$headers[] = 'Content-Type: text/html; charset=UTF-8';
             	$headers[] = 'Reply-To: Gosforth Harriers <webmaster@gosforth-harriers.org>';
@@ -202,7 +209,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 	
 			// Validate team number
 			$teamNumErr = false;
-			$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamNumber = %d AND TeamID <> %d", array( $teamNum, $teamID ) );
+			$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamNumber = %d AND TeamID <> %d", array( $teamNum, $teamID ) );
 			$team_results = $wpdb->get_results( $team_query );
 			if ( ! empty( $team_results ) ) {
 				$teamNumErr = true;
@@ -216,7 +223,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			
 			// Validate team name
 			$teamNameErr = false;
-			$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamName = %s AND TeamID <> %d", array( $teamName, $teamID ) );
+			$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamName = %s AND TeamID <> %d", array( $teamName, $teamID ) );
 			$team_results = $wpdb->get_results( $team_query );
 			if ( !empty( $team_results ) ) {
 				$teamNameErr = true;
@@ -275,25 +282,28 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 				if ( $isAdmin ) :
 					// Update the values
 					$wpdb->update( 
-						"{$wpdb->prefix}ghac_c_teams", 
+						"{$wpdb->prefix}ghac_sr25_teams", 
 						array(
 							'TeamNumber' => $teamNum,
 							'TeamName' => $teamName,
 							'TeamStatus' => $teamStatus,
 							'ClubName' => $clubName,
 							'Category' => $category,
-							'RunnerA' => $runnerAName,
-							'RunnerACategory' => $runnerACategory,
+							'RunnerAFirstName' => $runnerAFirstName,
+							'RunnerALastName' => $runnerALastName,
+							'RunnerAGender' => $runnerAGender,
 							'RunnerAAge' => $runnerAAge,
 							'RunnerATime' => $runnerATime,
 							'RunnerALegTime' => $runnerALegTime,
-							'RunnerB' => $runnerBName,
-							'RunnerBCategory' => $runnerBCategory,
+							'RunnerBFirstName' => $runnerBFirstName,
+							'RunnerBLastName' => $runnerBLastName,
+							'RunnerBGender' => $runnerBGender,
 							'RunnerBAge' => $runnerBAge,
 							'RunnerBTime' => $runnerBTime,
 							'RunnerBLegTime' => $runnerBLegTime,
-							'RunnerC' => $runnerCName,
-							'RunnerCCategory' => $runnerCCategory,
+							'RunnerCFirstName' => $runnerCFirstName,
+							'RunnerCLastName' => $runnerCLastName,
+							'RunnerCGender' => $runnerCGender,
 							'RunnerCAge' => $runnerCAge,
 							'RunnerCTime' => $runnerCTime,
 							'RunnerCLegTime' => $runnerCLegTime,
@@ -303,23 +313,27 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 							'TeamID' => $teamID
 						)
 					);
+					echo $wpdb->last_error;
 				else:
 					// Update the values
 					$wpdb->update( 
-						"{$wpdb->prefix}ghac_c_teams", 
+						"{$wpdb->prefix}ghac_sr25_teams", 
 						array(
 							'TeamNumber' => $teamNum,
 							'TeamName' => $teamName,
 							'ClubName' => $clubName,
 							'Category' => $category,
-							'RunnerA' => $runnerAName,
-							'RunnerACategory' => $runnerACategory,
+							'RunnerAFirstName' => $runnerAFirstName,
+							'RunnerALastName' => $runnerALastName,
+							'RunnerAGender' => $runnerAGender,
 							'RunnerAAge' => $runnerAAge,
-							'RunnerB' => $runnerBName,
-							'RunnerBCategory' => $runnerBCategory,
+							'RunnerBFirstName' => $runnerBFirstName,
+							'RunnerBLastName' => $runnerBLastName,
+							'RunnerBGender' => $runnerBGender,
 							'RunnerBAge' => $runnerBAge,
-							'RunnerC' => $runnerCName,
-							'RunnerCCategory' => $runnerCCategory,
+							'RunnerCFirstName' => $runnerCFirstName,
+							'RunnerCLastName' => $runnerCLastName,
+							'RunnerCGender' => $runnerCGender,
 							'RunnerCAge' => $runnerCAge
 						),
 						array(
@@ -337,8 +351,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 ?>
 
 <?php get_header(); ?>
-<div class="content-1">
+<div class="page-padding content-1">
 	<div class="container">
+		<?php echo $isSubscriber; ?>
 		<div class="row">
 			<div class="col-12">
 				<h1><?php the_title(); ?></h1>
@@ -390,10 +405,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 										<label for="category" class="form-label">Category</label>
                         				<select class="form-select" id="category" name="category" aria-describedby="categoryHelp">
   											<option value="Uncategorised" <?php if ( ! isset( $category ) || $category == 'Uncategorised' ) echo( 'selected' );  ?>>Select a category</option>
-  											<option value="Senior Ladies" <?php if ( isset( $category ) && $category == 'Senior Ladies' ) echo( 'selected' );  ?>>Senior Ladies</option>
-  											<option value="Senior Mens" <?php if ( isset( $category ) && $category == 'Senior Mens' ) echo( 'selected' );  ?>>Senior Mens</option>
-  											<option value="Veteran Ladies" <?php if ( isset( $category ) && $category == 'Veteran Ladies' ) echo( 'selected' );  ?>>Veteran Ladies</option>
-											<option value="Veteran Mens" <?php if ( isset( $category ) && $category == 'Veteran Mens' ) echo( 'selected' );  ?>>Veteran Mens</option>
+  											<option value="Senior Ladies" <?php if ( isset( $category ) && $category == 'Senior Women' ) echo( 'selected' );  ?>>Senior Women</option>
+  											<option value="Senior Mens" <?php if ( isset( $category ) && $category == 'Senior Men' ) echo( 'selected' );  ?>>Senior Men</option>
+  											<option value="Veteran Ladies" <?php if ( isset( $category ) && $category == 'Veteran Women' ) echo( 'selected' );  ?>>Veteran Women</option>
+											<option value="Veteran Mens" <?php if ( isset( $category ) && $category == 'Veteran Men' ) echo( 'selected' );  ?>>Veteran Men</option>
 										</select>
                         				<div id="categoryHelp" class="form-text">Select the category for the team. Leave blank if not known.</div>
                     				</div>
@@ -423,6 +438,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 									</div>
 									<div class="md-3">
 										<h2>Gun Time: <?php echo $teamTime; ?></h2>
+										<input type="hidden" name="teamTime" value="<?php echo( isset( $teamTime ) ) ? $teamTime : ''; ?>">
 									</div>
 								</div>
 							</div>
@@ -443,7 +459,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
   											</thead>
 											<tbody>
 												<?php
-													$emailAddresses = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teamemails te INNER JOIN {$wpdb->prefix}ghac_c_emails em ON te.EmailID = em.EmailID WHERE te.TeamID = %d", $teamID ) );
+													$emailAddresses = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teamemails te INNER JOIN {$wpdb->prefix}ghac_sr25_emails em ON te.EmailID = em.EmailID WHERE te.TeamID = %d", $teamID ) );
 													foreach($emailAddresses as $emailRow) {
 												?>
 													<tr>
@@ -528,30 +544,43 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 									Runner A
 								</div>
 								<div class="card-body">
+									
 									<div class="mb-3">
-										<label for="runnerAName" class="form-label">Full Name</label>
-                        				<input type="text" id="runnerAName" name="runnerAName" aria-describedby="runnerANameHelp" maxlength="60" value="<?php echo( isset( $runnerAName ) ) ? $runnerAName : ''; ?>" class="form-control <?php if ( isset( $runnerANameErr ) ) { echo( $runnerANameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
-                        				<div id="runnerANameHelp" class="form-text">Enter the name of the runner for the first leg.</div>
+										<label for="runnerAFirstName" class="form-label">First Name</label>
+                        				<input type="text" id="runnerAFirstName" name="runnerAFirstName" aria-describedby="runnerAFirstNameHelp" maxlength="30" value="<?php echo( isset( $runnerAFirstName ) ) ? $runnerAFirstName : ''; ?>" class="form-control <?php if ( isset( $runnerAFirstNameErr ) ) { echo( $runnerAFirstNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
+                        				<div id="runnerAFirstNameHelp" class="form-text">Enter the first name of the runner for the first leg.</div>
+									</div>
+									<div class="mb-3">
+										<label for="runnerALastName" class="form-label">Last Name</label>
+                        				<input type="text" id="runnerALastName" name="runnerALastName" aria-describedby="runnerALastNameHelp" maxlength="30" value="<?php echo( isset( $runnerALastName ) ) ? $runnerALastName : ''; ?>" class="form-control <?php if ( isset( $runnerALastNameErr ) ) { echo( $runnerALastNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
+                        				<div id="runnerAFirstNameHelp" class="form-text">Enter the last name of the runner for the first leg.</div>
 									</div>
 									<div class="row mb-3">
 										<div class="col">
-											<label for="runnerACategory" class="form-label">Category</label>
-                        					<select class="form-select" id="runnerACategory" name="runnerACategory" aria-describedby="runnerACategoryHelp">
-  												<option value="Uncategorised" <?php if ( ! isset( $runnerACategory ) || $runnerACategory == 'Uncategorised' ) echo( 'selected' );  ?>>Select a category</option>
-  												<option value="Senior Ladies" <?php if ( isset( $runnerACategory ) && $runnerACategory == 'Senior Ladies' ) echo( 'selected' );  ?>>Senior Ladies</option>
-  												<option value="Senior Mens" <?php if ( isset( $runnerACategory ) && $runnerACategory == 'Senior Mens' ) echo( 'selected' );  ?>>Senior Mens</option>
-  												<option value="Veteran Ladies" <?php if ( isset( $runnerACategory ) && $runnerACategory == 'Veteran Ladies' ) echo( 'selected' );  ?>>Veteran Ladies</option>
-												<option value="Veteran Mens" <?php if ( isset( $runnerACategory ) && $runnerACategory == 'Veteran Mens' ) echo( 'selected' );  ?>>Veteran Mens</option>
+											<label for="runnerAGender" class="form-label">Gender</label>
+                        					<select class="form-select" id="runnerAGender" name="runnerAGender" aria-describedby="runnerAGenderHelp">
+  												<option value="Not Selected" <?php if ( ! isset( $runnerAGender ) || $runnerAGender == 'Not Selected' ) echo( 'selected' );  ?>>Select a gender</option>
+  												<option value="Female" <?php if ( isset( $runnerAGender ) && $runnerAGender == 'Female' ) echo( 'selected' );  ?>>Female</option>
+  												<option value="Male" <?php if ( isset( $runnerAGender ) && $runnerAGender == 'Male' ) echo( 'selected' );  ?>>Male</option>
 											</select>
-                        					<div id="runnerACategoryHelp" class="form-text">Select the category for the runner</div>
+                        					<div id="runnerACategoryHelp" class="form-text">Select the gender for the runner</div>
 										</div>
 										<div class="col">
-											<label for="runnerAAge" class="form-label">Age Band</label>
+											<label for="runnerAAge" class="form-label">Age Category</label>
                         					<select class="form-select" id="runnerAAge" name="runnerAAge" aria-describedby="runnerAAgeHelp">
-  												<option value="Age not selected" <?php if ( ! isset( $runnerAAge ) || $runnerAAge == 'Age not selected' ) echo( 'selected' );  ?>>Select an age</option>
-  												<option value="Under 50" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'Under 50' ) echo( 'selected' );  ?>>Under 50</option>
-  												<option value="Over 50" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'Over 50' ) echo( 'selected' );  ?>>Over 50</option>
-  												<option value="Over 60" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'Over 60' ) echo( 'selected' );  ?>>Over 60</option>
+  												<option value="Age not selected" <?php if ( ! isset( $runnerAAge ) || $runnerAAge == 'Age not selected' ) echo( 'selected' );  ?>>Select an age category</option>
+  												<option value="Senior" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'Senior' ) echo( 'selected' );  ?>>Senior</option>
+  												<option value="V35" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V35' ) echo( 'selected' );  ?>>V35</option>
+												<option value="V40" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V40' ) echo( 'selected' );  ?>>V40</option>
+												<option value="V45" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V45' ) echo( 'selected' );  ?>>V45</option>
+												<option value="V50" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V50' ) echo( 'selected' );  ?>>V50</option>
+												<option value="V55" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V55' ) echo( 'selected' );  ?>>V55</option>
+												<option value="V60" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V60' ) echo( 'selected' );  ?>>V60</option>
+												<option value="V65" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V65' ) echo( 'selected' );  ?>>V65</option>
+												<option value="V70" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V70' ) echo( 'selected' );  ?>>V70</option>
+												<option value="V75" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V75' ) echo( 'selected' );  ?>>V75</option>
+												<option value="V80" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V80' ) echo( 'selected' );  ?>>V80</option>
+												<option value="V85" <?php if ( isset( $runnerAAge ) && $runnerAAge == 'V85' ) echo( 'selected' );  ?>>V85</option>
 											</select>
                         					<div id="runnerAAgeHelp" class="form-text">Select the age band for the runner</div>
 										</div>
@@ -576,29 +605,41 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 								</div>
 								<div class="card-body">
 									<div class="mb-3">
-										<label for="runnerBName" class="form-label">Full Name</label>
-                        				<input type="text" id="runnerBName" name="runnerBName" aria-describedby="runnerBNameHelp" maxlength="60" value="<?php echo( isset( $runnerBName ) ) ? $runnerBName : ''; ?>" class="form-control <?php if ( isset( $runnerBNameErr ) ) { echo( $runnerBNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
-                        				<div id="runnerBNameHelp" class="form-text">Enter the name of the runner for the second leg.</div>
+										<label for="runnerBFirstName" class="form-label">First Name</label>
+                        				<input type="text" id="runnerBFirstName" name="runnerBFirstName" aria-describedby="runnerBFirstNameHelp" maxlength="30" value="<?php echo( isset( $runnerBFirstName ) ) ? $runnerBFirstName : ''; ?>" class="form-control <?php if ( isset( $runnerBFirstNameErr ) ) { echo( $runnerBFirstNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
+                        				<div id="runnerBFirstNameHelp" class="form-text">Enter the first name of the runner for the second leg.</div>
+									</div>
+									<div class="mb-3">
+										<label for="runnerBLastName" class="form-label">Last Name</label>
+                        				<input type="text" id="runnerBLastName" name="runnerBLastName" aria-describedby="runnerBLastNameHelp" maxlength="30" value="<?php echo( isset( $runnerBLastName ) ) ? $runnerBLastName : ''; ?>" class="form-control <?php if ( isset( $runnerBLastNameErr ) ) { echo( $runnerBLastNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
+                        				<div id="runnerBLastNameHelp" class="form-text">Enter the last name of the runner for the second leg.</div>
 									</div>
 									<div class="row mb-3">
 										<div class="col">
-											<label for="runnerBCategory" class="form-label">Category</label>
-                        					<select class="form-select" id="runnerBCategory" name="runnerBCategory" aria-describedby="runnerBCategoryHelp">
-  												<option value="Uncategorised" <?php if ( ! isset( $runnerBCategory ) || $runnerBCategory == 'Uncategorised' ) echo( 'selected' );  ?>>Select a category</option>
-  												<option value="Senior Ladies" <?php if ( isset( $runnerBCategory ) && $runnerBCategory == 'Senior Ladies' ) echo( 'selected' );  ?>>Senior Ladies</option>
-  												<option value="Senior Mens" <?php if ( isset( $runnerBCategory ) && $runnerBCategory == 'Senior Mens' ) echo( 'selected' );  ?>>Senior Mens</option>
-  												<option value="Veteran Ladies" <?php if ( isset( $runnerBCategory ) && $runnerBCategory == 'Veteran Ladies' ) echo( 'selected' );  ?>>Veteran Ladies</option>
-												<option value="Veteran Mens" <?php if ( isset( $runnerBCategory ) && $runnerBCategory == 'Veteran Mens' ) echo( 'selected' );  ?>>Veteran Mens</option>
+											<label for="runnerBGender" class="form-label">Category</label>
+                        					<select class="form-select" id="runnerBGender" name="runnerBGender" aria-describedby="runnerBGenderHelp">
+  												<option value="Not Selected" <?php if ( ! isset( $runnerBGender ) || $runnerBGender == 'Not Selected' ) echo( 'selected' );  ?>>Select a gender</option>
+  												<option value="Female" <?php if ( isset( $runnerBGender ) && $runnerBGender == 'Female' ) echo( 'selected' );  ?>>Female</option>
+  												<option value="Male" <?php if ( isset( $runnerBGender ) && $runnerBGender == 'Male' ) echo( 'selected' );  ?>>Male</option>
 											</select>
-                        					<div id="runnerBCategoryHelp" class="form-text">Select the category for the runner</div>
+                        					<div id="runnerBGenderHelp" class="form-text">Select the gender for the runner</div>
 										</div>
 										<div class="col">
 											<label for="runnerBAge" class="form-label">Age Band</label>
                         					<select class="form-select" id="runnerBAge" name="runnerBAge" aria-describedby="runnerBAgeHelp">
-  												<option value="Age not selected" <?php if ( ! isset( $runnerBAge ) || $runnerBAge == 'Age not selected' ) echo( 'selected' );  ?>>Select an age</option>
-  												<option value="Under 50" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'Under 50' ) echo( 'selected' );  ?>>Under 50</option>
-  												<option value="Over 50" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'Over 50' ) echo( 'selected' );  ?>>Over 50</option>
-  												<option value="Over 60" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'Over 60' ) echo( 'selected' );  ?>>Over 60</option>
+  												<option value="Age not selected" <?php if ( ! isset( $runnerBAge ) || $runnerBAge == 'Age not selected' ) echo( 'selected' );  ?>>Select an age category</option>
+  												<option value="Senior" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'Senior' ) echo( 'selected' );  ?>>Senior</option>
+  												<option value="V35" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V35' ) echo( 'selected' );  ?>>V35</option>
+  												<option value="V40" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V40' ) echo( 'selected' );  ?>>V40</option>
+												<option value="V45" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V45' ) echo( 'selected' );  ?>>V45</option>
+												<option value="V50" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V50' ) echo( 'selected' );  ?>>V50</option>
+												<option value="V55" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V55' ) echo( 'selected' );  ?>>V55</option>
+												<option value="V60" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V60' ) echo( 'selected' );  ?>>V60</option>
+												<option value="V65" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V65' ) echo( 'selected' );  ?>>V65</option>
+												<option value="V70" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V70' ) echo( 'selected' );  ?>>V70</option>
+												<option value="V75" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V75' ) echo( 'selected' );  ?>>V75</option>
+												<option value="V80" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V80' ) echo( 'selected' );  ?>>V80</option>
+												<option value="V85" <?php if ( isset( $runnerBAge ) && $runnerBAge == 'V85' ) echo( 'selected' );  ?>>V85</option>
 											</select>
                         					<div id="runnerBAgeHelp" class="form-text">Select the age band for the runner</div>
 										</div>
@@ -625,29 +666,41 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 								</div>
 								<div class="card-body">
 									<div class="mb-3">
-										<label for="runnerCName" class="form-label">Full Name</label>
-                        				<input type="text" id="runnerCName" name="runnerCName" aria-describedby="runnerCNameHelp" maxlength="60" value="<?php echo( isset( $runnerCName ) ) ? $runnerCName : ''; ?>" class="form-control <?php if ( isset( $runnerCNameErr ) ) { echo( $runnerCNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
-                        				<div id="runnerCNameHelp" class="form-text">Enter the name of the runner for the last leg.</div>
+										<label for="runnerCFirstName" class="form-label">First Name</label>
+                        				<input type="text" id="runnerCFirstName" name="runnerCFirstName" aria-describedby="runnerCFirstNameHelp" maxlength="30" value="<?php echo( isset( $runnerCFirstName ) ) ? $runnerCFirstName : ''; ?>" class="form-control <?php if ( isset( $runnerCFirstNameErr ) ) { echo( $runnerCFirstNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
+                        				<div id="runnerCFirstNameHelp" class="form-text">Enter the first name of the runner for the last leg.</div>
+									</div>
+									<div class="mb-3">
+										<label for="runnerCLastName" class="form-label">Last Name</label>
+                        				<input type="text" id="runnerCLastName" name="runnerCLastName" aria-describedby="runnerCLastNameHelp" maxlength="30" value="<?php echo( isset( $runnerCLastName ) ) ? $runnerCLastName : ''; ?>" class="form-control <?php if ( isset( $runnerCLastNameErr ) ) { echo( $runnerCLastNameErr == true ) ? 'is-invalid' : 'is-valid'; } ?>">
+                        				<div id="runnerCLastNameHelp" class="form-text">Enter the last name of the runner for the last leg.</div>
 									</div>
 									<div class="row mb-3">
 										<div class="col">
-											<label for="runnerCCategory" class="form-label">Category</label>
-                        					<select class="form-select" id="runnerCCategory" name="runnerCCategory" aria-describedby="runnerCCategoryHelp">
-  												<option value="Uncategorised" <?php if ( ! isset( $runnerCCategory ) || $runnerCCategory == 'Uncategorised' ) echo( 'selected' );  ?>>Select a category</option>
-  												<option value="Senior Ladies" <?php if ( isset( $runnerCCategory ) && $runnerCCategory == 'Senior Ladies' ) echo( 'selected' );  ?>>Senior Ladies</option>
-  												<option value="Senior Mens" <?php if ( isset( $runnerCCategory ) && $runnerCCategory == 'Senior Mens' ) echo( 'selected' );  ?>>Senior Mens</option>
-  												<option value="Veteran Ladies" <?php if ( isset( $runnerCCategory ) && $runnerCCategory == 'Veteran Ladies' ) echo( 'selected' );  ?>>Veteran Ladies</option>
-												<option value="Veteran Mens" <?php if ( isset( $runnerCCategory ) && $runnerCCategory == 'Veteran Mens' ) echo( 'selected' );  ?>>Veteran Mens</option>
+											<label for="runnerCGender" class="form-label">Gender</label>
+                        					<select class="form-select" id="runnerCGender" name="runnerCGender" aria-describedby="runnerCGenderHelp">
+  												<option value="Not Selected" <?php if ( ! isset( $runnerCGender ) || $runnerCGender == 'Not Selected' ) echo( 'selected' );  ?>>Select a gender</option>
+  												<option value="Female" <?php if ( isset( $runnerCGender ) && $runnerCGender == 'Female' ) echo( 'selected' );  ?>>Female</option>
+  												<option value="Male" <?php if ( isset( $runnerCCategory ) && $runnerCCategory == 'Male' ) echo( 'selected' );  ?>>Male</option>
 											</select>
-                        					<div id="runnerCCategoryHelp" class="form-text">Select the category for the runner</div>
+                        					<div id="runnerCGenderHelp" class="form-text">Select the gender for the runner</div>
 										</div>
 										<div class="col">
 											<label for="runnerCAge" class="form-label">Age Band</label>
                         					<select class="form-select" id="runnerCAge" name="runnerCAge" aria-describedby="runnerCAgeHelp">
-  												<option value="Age not selected" <?php if ( ! isset( $runnerCAge ) || $runnerCAge == 'Age not selected' ) echo( 'selected' );  ?>>Select an age</option>
-  												<option value="Under 50" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'Under 50' ) echo( 'selected' );  ?>>Under 50</option>
-  												<option value="Over 50" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'Over 50' ) echo( 'selected' );  ?>>Over 50</option>
-  												<option value="Over 60" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'Over 60' ) echo( 'selected' );  ?>>Over 60</option>
+  												<option value="Age not selected" <?php if ( ! isset( $runnerCAge ) || $runnerCAge == 'Age not selected' ) echo( 'selected' );  ?>>Select an age cateory</option>
+  												<option value="Senior" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'Senior' ) echo( 'selected' );  ?>>Senior</option>
+  												<option value="V35" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V35' ) echo( 'selected' );  ?>>V35</option>
+  												<option value="V40" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V40' ) echo( 'selected' );  ?>>V40</option>
+												<option value="V45" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V45' ) echo( 'selected' );  ?>>V45</option>
+												<option value="V50" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V50' ) echo( 'selected' );  ?>>V50</option>
+												<option value="V55" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V55' ) echo( 'selected' );  ?>>V55</option>
+												<option value="V60" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V60' ) echo( 'selected' );  ?>>V60</option>
+												<option value="V65" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V65' ) echo( 'selected' );  ?>>V65</option>
+												<option value="V70" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V70' ) echo( 'selected' );  ?>>V70</option>
+												<option value="V75" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V75' ) echo( 'selected' );  ?>>V75</option>
+												<option value="V80" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V80' ) echo( 'selected' );  ?>>V80</option>
+												<option value="V85" <?php if ( isset( $runnerCAge ) && $runnerCAge == 'V85' ) echo( 'selected' );  ?>>V85</option>
 											</select>
                         					<div id="runnerCAgeHelp" class="form-text">Select the age band for the runner</div>
 										</div>
@@ -668,7 +721,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 					</div>
 					<div class="row">
 						<div class="col">
-							<?php if ( ( ( $isAdmin == false ) && ( $teamStatus > 1 ) ) || ( $isSubscriber == true ) )  : ?>
+							<?php if ( ( ( $isAdmin == false ) && ( $teamStatus > 1 ) ) || ( $isSubscriber == true ) ) : ?>
 								<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/teams-manager' ); ?>" class="btn btn-primary">Go Team Manager</a>
 							<?php else : ?>
 								<button type="submit" name="submit" value="submit" class="btn btn-primary">Save Changes</button>&nbsp;&nbsp;

@@ -11,7 +11,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
         $serverCode = $_POST['emailCode'];
 
         // Get the email address entry
-        $email = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_emails WHERE EmailAddress = %s", $emailAddress ) );
+        $email = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_emails WHERE EmailAddress = %s", $emailAddress ) );
 
         if ( isset( $email ) ) {
             if ( ( $email->CodeUsed == false ) && ( $clientCode == $email->ClientCode ) && ( $serverCode == $email->ServerCode ) && ( time() < strtotime( $email->CodeExpiry ) ) ) {
@@ -19,7 +19,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
                 $_SESSION['relays_user_email'] = $emailAddress;
                 // Update the table to show that the code has now been used
                 $wpdb->update( 
-                    "{$wpdb->prefix}ghac_c_emails", 
+                    "{$wpdb->prefix}ghac_sr25_emails", 
                     array(
                         'CodeUsed' => true
                     ),
@@ -50,7 +50,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
             $serverCode = rand(100000,999999);
             // Update the values
 			$wpdb->update( 
-				"{$wpdb->prefix}ghac_c_emails", 
+				"{$wpdb->prefix}ghac_sr25_emails", 
 				array(
                     'ClientCode' => $clientCode,
                     'ServerCode' => $serverCode,
@@ -63,7 +63,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
             );
 
             // Check if the email address exists
-            $email = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_emails WHERE EmailAddress = %s", $emailAddress ) );
+            $email = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_emails WHERE EmailAddress = %s", $emailAddress ) );
 
             if ( isset ( $email ) ) {
                 // Let's send the person an email to tell them.
@@ -90,7 +90,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 }
 ?>
 <?php get_header(); ?>
-<div class="content-1">
+<div class="page-padding content-1">
 	<div class="container">
 		<div class="row">
             <div class="col">

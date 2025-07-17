@@ -11,7 +11,7 @@ if ( is_user_in_role( 'administrator' ) ) { $isAdmin = true; } else { $isAdmin =
 if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubscriber = false; }
 ?>
 <?php get_header(); ?>
-<div class="content-1">
+<div class="page-padding content-1">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -43,19 +43,19 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 							<?php
 								// If user is an admin get all of the teams, otherwise just the ones relevant to the particular session
 								if ( $isAdmin == true  || $isSubscriber == true ) :
-									$teams = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams" ) );
+									$teams = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams" ) );
 								else :
 									$teams = $wpdb->get_results( $wpdb->prepare( 
-										"SELECT {$wpdb->prefix}ghac_c_teams.TeamID, {$wpdb->prefix}ghac_c_teams.TeamNumber, " .
-												"{$wpdb->prefix}ghac_c_teams.TeamName, {$wpdb->prefix}ghac_c_teams.ClubName, {$wpdb->prefix}ghac_c_teams.Category, " . 
-												"{$wpdb->prefix}ghac_c_teams.RunnerA, {$wpdb->prefix}ghac_c_teams.RunnerATime, {$wpdb->prefix}ghac_c_teams.RunnerALegTime, {$wpdb->prefix}ghac_c_teams.RunnerACategory, {$wpdb->prefix}ghac_c_teams.RunnerAAge, " . 
-												"{$wpdb->prefix}ghac_c_teams.RunnerB, {$wpdb->prefix}ghac_c_teams.RunnerBTime, {$wpdb->prefix}ghac_c_teams.RunnerBLegTime, {$wpdb->prefix}ghac_c_teams.RunnerBCategory, {$wpdb->prefix}ghac_c_teams.RunnerBAge, " .
-												"{$wpdb->prefix}ghac_c_teams.RunnerC, {$wpdb->prefix}ghac_c_teams.RunnerCTime, {$wpdb->prefix}ghac_c_teams.RunnerCLegTime, {$wpdb->prefix}ghac_c_teams.RunnerCCategory, {$wpdb->prefix}ghac_c_teams.RunnerCAge, " .
-												"{$wpdb->prefix}ghac_c_teams.TeamTime " .
-											"FROM {$wpdb->prefix}ghac_c_teams " .
-												"INNER JOIN {$wpdb->prefix}ghac_c_teamemails ON {$wpdb->prefix}ghac_c_teams.TeamID = {$wpdb->prefix}ghac_c_teamemails.TeamID " .
-												"INNER JOIN {$wpdb->prefix}ghac_c_emails ON {$wpdb->prefix}ghac_c_teamemails.EmailID = {$wpdb->prefix}ghac_c_emails.EmailID " .
-											"WHERE {$wpdb->prefix}ghac_c_emails.EmailAddress = %s", $_SESSION['relays_user_email'] 
+										"SELECT {$wpdb->prefix}ghac_sr25_teams.TeamID, {$wpdb->prefix}ghac_sr25_teams.TeamNumber, " .
+												"{$wpdb->prefix}ghac_sr25_teams.TeamName, {$wpdb->prefix}ghac_sr25_teams.ClubName, {$wpdb->prefix}ghac_sr25_teams.Category, " . 
+												"{$wpdb->prefix}ghac_sr25_teams.RunnerAFirstName, {$wpdb->prefix}ghac_sr25_teams.RunnerALastName, {$wpdb->prefix}ghac_sr25_teams.RunnerATime, {$wpdb->prefix}ghac_sr25_teams.RunnerALegTime, {$wpdb->prefix}ghac_sr25_teams.RunnerAGender, {$wpdb->prefix}ghac_sr25_teams.RunnerAAge, " . 
+												"{$wpdb->prefix}ghac_sr25_teams.RunnerBFirstName, {$wpdb->prefix}ghac_sr25_teams.RunnerBLastName, {$wpdb->prefix}ghac_sr25_teams.RunnerBTime, {$wpdb->prefix}ghac_sr25_teams.RunnerBLegTime, {$wpdb->prefix}ghac_sr25_teams.RunnerBGender, {$wpdb->prefix}ghac_sr25_teams.RunnerBAge, " .
+												"{$wpdb->prefix}ghac_sr25_teams.RunnerCFirstName, {$wpdb->prefix}ghac_sr25_teams.RunnerCLastName, {$wpdb->prefix}ghac_sr25_teams.RunnerCTime, {$wpdb->prefix}ghac_sr25_teams.RunnerCLegTime, {$wpdb->prefix}ghac_sr25_teams.RunnerCGender, {$wpdb->prefix}ghac_sr25_teams.RunnerCAge, " .
+												"{$wpdb->prefix}ghac_sr25_teams.TeamTime " .
+											"FROM {$wpdb->prefix}ghac_sr25_teams " .
+												"INNER JOIN {$wpdb->prefix}ghac_sr25_teamemails ON {$wpdb->prefix}ghac_sr25_teams.TeamID = {$wpdb->prefix}ghac_sr25_teamemails.TeamID " .
+												"INNER JOIN {$wpdb->prefix}ghac_sr25_emails ON {$wpdb->prefix}ghac_sr25_teamemails.EmailID = {$wpdb->prefix}ghac_sr25_emails.EmailID " .
+											"WHERE {$wpdb->prefix}ghac_sr25_emails.EmailAddress = %s", $_SESSION['relays_user_email'] 
 										)
 									);
 								endif;
@@ -102,38 +102,55 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 										<td><?php echo $row->TeamTime; ?></td>
 									<?php endif; ?>
 									<td>
-										<?php echo $row->RunnerA; ?>
+										<?php echo $row->RunnerAFirstName . " " . $row->RunnerALastName; ?>
 										<sup>
 											<?php 
-												switch ( $row->RunnerACategory ) {
-													case "Senior Ladies":
-														echo " (SF)";
+												switch ( $row->RunnerAGender ) {
+													case "Female":
+														echo " (F";
 														break;
-													case "Senior Mens":
-														echo " (SM)";
-														break;
-													case "Veteran Ladies":
-														echo " (VF)";
-														break;
-													case "Veteran Mens":
-														echo " (VM)";
+													case "Male":
+														echo " (M";
 														break;
 													default:
 														"";
 												}	
-											?>
-										</sup>
-										<sup>
-											<?php 
 												switch ( $row->RunnerAAge ) {
-													case "Under 50":
-														echo "";
+													case "Senior":
+														echo "S)";
 														break;
-													case "Over 50":
-														echo " (50)";
+													case "V35":
+														echo "V35)";
 														break;
-													case "Over 60":
-														echo " (60)";
+													case "V40":
+														echo "V40)";
+														break;
+													case "V45":
+														echo "V45)";
+														break;
+													case "V50":
+														echo "V50)";
+														break;
+													case "V55":
+														echo "V55)";
+														break;
+													case "V60":
+														echo "V60)";
+														break;
+													case "V65":
+														echo "V65)";
+														break;
+													case "V70":
+														echo "V70)";
+														break;
+													case "V75":
+														echo "V75)";
+														break;
+													case "V80":
+														echo "V80)";
+														break;
+													case "V85":
+														echo "V85)";
 														break;
 													default:
 														echo "";
@@ -142,38 +159,55 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 										</sup>
 									</td>
 									<td>
-										<?php echo $row->RunnerB; ?>
+										<?php echo $row->RunnerBFirstName . " " . $row->RunnerBLastName; ?>
 										<sup>
 											<?php 
-												switch ( $row->RunnerBCategory ) {
-													case "Senior Ladies":
-														echo " (SF)";
+												switch ( $row->RunnerBGender ) {
+													case "Female":
+														echo " (F";
 														break;
-													case "Senior Mens":
-														echo " (SM)";
-														break;
-													case "Veteran Ladies":
-														echo " (VF)";
-														break;
-													case "Veteran Mens":
-														echo " (VM)";
+													case "Male":
+														echo " (M";
 														break;
 													default:
-														echo "";
+														"";
 												}
-											?>
-										</sup>
-										<sup>
-											<?php 
 												switch ( $row->RunnerBAge ) {
-													case "Under 50":
-														echo "";
+													case "Senior":
+														echo "S)";
 														break;
-													case "Over 50":
-														echo " (50)";
+													case "V35":
+														echo "V35)";
 														break;
-													case "Over 60":
-														echo " (60)";
+													case "V40":
+														echo "V40)";
+														break;
+													case "V45":
+														echo "V45)";
+														break;
+													case "V50":
+														echo "V50)";
+														break;
+													case "V55":
+														echo "V55)";
+														break;
+													case "V60":
+														echo "V60)";
+														break;
+													case "V65":
+														echo "V65)";
+														break;
+													case "V70":
+														echo "V70)";
+														break;
+													case "V75":
+														echo "V75)";
+														break;
+													case "V80":
+														echo "V80)";
+														break;
+													case "V85":
+														echo "V85)";
 														break;
 													default:
 														echo "";
@@ -182,38 +216,55 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 										</sup>
 									</td>
 									<td>
-										<?php echo $row->RunnerC; ?>
+										<?php echo $row->RunnerCFirstName . " " . $row->RunnerCLastName; ?>
 										<sup>
 											<?php 
-												switch ( $row->RunnerCCategory ) {
-													case "Senior Ladies":
-														echo " (SF)";
+												switch ( $row->RunnerCGender ) {
+													case "Female":
+														echo " (F";
 														break;
-													case "Senior Mens":
-														echo " (SM)";
-														break;
-													case "Veteran Ladies":
-														echo " (VF)";
-														break;
-													case "Veteran Mens":
-														echo " (VM)";
+													case "Male":
+														echo " (M";
 														break;
 													default:
-														echo "";
+														"";
 												}
-											?>
-										</sup>
-										<sup>
-											<?php 
 												switch ( $row->RunnerCAge ) {
-													case "Under 50":
-														echo "";
+													case "Senior":
+														echo "S)";
 														break;
-													case "Over 50":
-														echo " (50)";
+													case "V35":
+														echo "V35)";
 														break;
-													case "Over 60":
-														echo " (60)";
+													case "V40":
+														echo "V40)";
+														break;
+													case "V45":
+														echo "V45)";
+														break;
+													case "V50":
+														echo "V50)";
+														break;
+													case "V55":
+														echo "V55)";
+														break;
+													case "V60":
+														echo "V60)";
+														break;
+													case "V65":
+														echo "V65)";
+														break;
+													case "V70":
+														echo "V70)";
+														break;
+													case "V75":
+														echo "V75)";
+														break;
+													case "V80":
+														echo "V80)";
+														break;
+													case "V85":
+														echo "V85)";
 														break;
 													default:
 														echo "";

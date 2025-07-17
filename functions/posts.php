@@ -51,7 +51,7 @@ function ghac_posts_list_post( $col_class, $col_class_notlast, $thumb_class, $po
     return $htmlOutput . $htmlClosing;
 }
 
-function ghac_posts_list( $attributes, $content = null ) {
+function ghac_posts_list( $attributes, $content = null, $shortcode = null, $query = null ) {
     // String to hold the HTML markup to return
     $htmlOutput = "";
     $atts = shortcode_atts(
@@ -84,7 +84,6 @@ function ghac_posts_list( $attributes, $content = null ) {
     while ( $section < 2 ) {
         // String to hold the closing HTML markup to append to htmlOutput
         $htmlClosing = "";
-        // String to hold the heading (if applicable)
         if ( $section == 0 ) {
             // Add containers DIVs
             if ( esc_attr( $atts['add_container'] ) == "true" ) {
@@ -116,12 +115,17 @@ function ghac_posts_list( $attributes, $content = null ) {
                 $htmlClosing = "</div>" . $htmlClosing;
             }
             $sticky = array();
-            // Query and return the posts
-            $posts = new WP_Query( array(
-                'posts_per_page' => esc_attr( $atts['posts'] ),
-                'post__not_in' => $postsDisplayed,
-                'ignore_sticky_posts' => true
-            ) );
+            // Determine if the posts have been passed as parameter (e.g. from acrhive.php)
+            if ( is_null( $query ) ) {
+                // Query and return the posts
+                $posts = new WP_Query( array(
+                    'posts_per_page' => esc_attr( $atts['posts'] ),
+                    'post__not_in' => $postsDisplayed,
+                    'ignore_sticky_posts' => true
+                ) ); 
+            } else {
+                $posts = $query;
+            }
             // Get the heading text
             $heading = $atts['heading'];
         }
@@ -135,6 +139,8 @@ function ghac_posts_list( $attributes, $content = null ) {
         // Loop through the posts
         if ( $posts -> have_posts() ) {
             while ( $posts -> have_posts() ) {
+                // Increment the postCount
+                $postCount++;
                 // Get the post
                 $posts -> the_post();
                 // Add the post to $postsDisplayed
@@ -147,7 +153,7 @@ function ghac_posts_list( $attributes, $content = null ) {
                 // Add the post
                 $htmlOutput .= ghac_posts_list_post( 
                     $section == 0 ? esc_attr( $atts[ 'latest_col_class'] ) : esc_attr( $atts[ 'col_class'] ),
-                    ( ( $section == 1 ) && ( $colCount < esc_attr( $atts['cols'] ) - 1 ) ) ? esc_attr( $atts[ 'col_class_notlast'] ) : "" ,
+                    ( ( $section == 1 ) && ( $postCount < esc_attr( $atts['posts'] ) ) ) ? esc_attr( $atts[ 'col_class_notlast'] ) : "" ,
                     $section == 0 ? esc_attr( $atts[ 'latest_thumbnail_class'] ) : esc_attr( $atts[ 'thumbnail_class'] ) ,
                     $section == 0 ? esc_attr( $atts[ 'latest_post_class'] ) : esc_attr( $atts[ 'post_class'] ),
                     get_the_permalink(),
@@ -166,7 +172,7 @@ function ghac_posts_list( $attributes, $content = null ) {
                     // Reset the column count
                     $colCount = 0;
                     // Close the bootstrap row
-                    $htmlOutput .= "</div>";
+                    //$htmlOutput .= "</div>";
                 }
             }
         }

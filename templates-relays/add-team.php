@@ -24,7 +24,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 		// Validate team number
 		$teamNumErr = false;
-		$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamNumber = %d", $teamNum );
+		$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamNumber = %d", $teamNum );
 		$team_results = $wpdb->get_results( $team_query );
 		if ( !empty( $team_results ) ) {
 			$teamNumErr = true;
@@ -38,7 +38,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 		
 		// Validate team name
 		$teamNameErr = false;
-		$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamName = %s", $teamName );
+		$team_query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamName = %s", $teamName );
 		$team_results = $wpdb->get_results( $team_query );
 		if ( !empty( $team_results ) ) {
 			$teamNameErr = true;
@@ -85,7 +85,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 		if ( $postSuccess ) {
 			if ( ! isset( $teamNum ) ) {
 				// A team number hasn't been entered therefore we need to generate one
-				$teamNum = $wpdb->get_var( $wpdb->prepare( "SELECT MAX(TeamNumber) FROM {$wpdb->prefix}ghac_c_teams" ) );
+				$teamNum = $wpdb->get_var( $wpdb->prepare( "SELECT MAX(TeamNumber) FROM {$wpdb->prefix}ghac_sr25_teams" ) );
 				if ( isset( $teamNum ) ) {
 					$teamNum = $teamNum + 1;
 				} else {
@@ -99,7 +99,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			}
 
 			// Insert the team into the table
-			$wpdb->insert( "{$wpdb->prefix}ghac_c_teams", array(
+			$wpdb->insert( "{$wpdb->prefix}ghac_sr25_teams", array(
 				'TeamNumber' => $teamNum,
 				'TeamName' => $teamName,
 				'Category' => $category, 
@@ -108,10 +108,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			$teamID = $wpdb->insert_id;
 
 			// Check if the email address is already in the table
-			$emailID = $wpdb->get_var( $wpdb->prepare( "SELECT EmailID FROM {$wpdb->prefix}ghac_c_emails WHERE EmailAddress = %s", $email ) );
+			$emailID = $wpdb->get_var( $wpdb->prepare( "SELECT EmailID FROM {$wpdb->prefix}ghac_sr25_emails WHERE EmailAddress = %s", $email ) );
 			if ( ! isset( $emailID ) ) {
 				// Insert the email into the table
-				$wpdb->insert( "{$wpdb->prefix}ghac_c_emails", 
+				$wpdb->insert( "{$wpdb->prefix}ghac_sr25_emails", 
 					array(
 						'EmailAddress' => $email,
 						'FirstName' => $firstName,
@@ -123,7 +123,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			} else {
 				// Update the name and last name for the email address supplied
 				$wpdb->update( 
-					"{$wpdb->prefix}ghac_c_emails", 
+					"{$wpdb->prefix}ghac_sr25_emails", 
 					array(
 						'FirstName' => $firstName,
 						'LastName' => $lastName
@@ -135,7 +135,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			}
 
 			// Insert link the team and the email address
-			$wpdb->insert( "{$wpdb->prefix}ghac_c_teamemails", array(
+			$wpdb->insert( "{$wpdb->prefix}ghac_sr25_teamemails", array(
 				'TeamID' => $teamID,
 				'EmailID' => $emailID
 			) );
@@ -144,13 +144,13 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			$emailSubject = 'Gosforth Harriers Summer Relays - New Team: ' . $teamName;
             $emailBody = 'Hi ' . $firstName;
             $emailBody = $emailBody . '<br /><br />Thank you for registering a team for the Gosforth Harriers & AC Summer Relays. It\'s fantastic to have you on board for what will be a great event.';
-            $emailBody = $emailBody . '<br /><br />We have introduced a registration process which puts you in control up until when you pick up your race numbers on Sunday 4th August 2024. At this stage the teams will be locked and you will need to speak to one of our amazing administration team to make any changes. ';
+            $emailBody = $emailBody . '<br /><br />We have introduced a registration process which puts you in control up until when you pick up your race numbers on Sunday 3rd August 2025. At this stage the teams will be locked and you will need to speak to one of our amazing administration team to make any changes. ';
 			$emailBody = $emailBody . '<br /><br />To enable this we have built our very own team manager which will allow you to select the catgory for your team, update your runners, add additional admins and have some fun coming up with team names (let\'s keep them clean!).';
             $emailBody = $emailBody . '<br /><br />To access the team manager click on the following link:';
             $emailBody = $emailBody . '<br /><br /><a href="' . get_page_permalink_by_pageslug( 'summer-relays/teams-manager' ) . '">Go to the Gosforth Summer Relays Team Manager</a>';
 			$emailBody = $emailBody . '<br /><br />You may receive more emails similar to this depending on how many teams you have registered. We would never spam you, this is perfectly normal. It\'s just how our system works to get you registered with all of your teams. All you need is the link above to access the team manager which will allow you to administer all of your teams easily and conveniently.';
 			$emailBody = $emailBody . '<br /><br />If you experience any issues with the team manager, don\'t worry we won\'t run off and leave you behind (we\'ll keep that for the event). All you need to do is reply to this email and our webmaster will answer your query.';
-            $emailBody = $emailBody . '<br /><br />For now, keep the training going! We look forward to seeing your teams on Sunday 4th August 2024.';
+            $emailBody = $emailBody . '<br /><br />For now, keep the training going! We look forward to seeing your teams on Sunday 3rd August 2025.';
 			$emailBody = $emailBody . '<br /><br />Gosforth Harriers & AC';
 			$headers[] = 'Content-Type: text/html; charset=UTF-8';
             $headers[] = 'Reply-To: Gosforth Harriers <webmaster@gosforth-harriers.org>';
@@ -170,7 +170,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 ?>
 
 <?php get_header(); ?>
-<div class="content-1">
+<div class="page-padding content-1">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
