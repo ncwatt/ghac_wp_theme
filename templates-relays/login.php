@@ -138,7 +138,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
                                         Login
                                     </div>
                                     <div class="card-body">
-                                        <div class="alert alert-info" role="alert">
+                                        <div class="alert alert-success" role="alert">
 						                    <p>If your email address is registered to a team, you will have been sent a unique one use code.</p>
                                             <p>Please check your email. The code will expire in 5 minutes.</p>
 					                    </div>
