@@ -3,17 +3,17 @@
             <div class="row">
                 <div class="col-6 col-md-4 order-1">
                     <h5>Gosforth Harriers &amp; Athletics Club</h5>
-                    <p>Broadway West Playing Fields</p>
-                    <p>Broadway West</p>
-                    <p>Gosforth</p>
+                    <p>Great Park Community Centre</p>
+                    <p>Roseden Way</p>
                     <p>Newcastle upon Tyne</p>
-                    <p>NE3 2HY</p>
+                    <p>NE13 9BD</p>
                     <ul class="follow-icons">
-                        <!--<li><a href="#" class="fab fa-facebook-f"></a>&nbsp;</li>-->
                         <li><a href="https://www.facebook.com/profile.php?id=61570961411901" target="_blank"><i class="bi bi-facebook"></i></a></li>
                         <li><a href="https://twitter.com/Gosforth_HandAC" target="_blank"><i class="bi bi-twitter-x"></i></a></li>
                         <li><a href="https://www.instagram.com/gosforthharriers" target="_blank"><i class="bi bi-instagram"></i></a></li>
+                        <li><a href="https://www.threads.com/@gosforthharriers" target="_blank"><i class="bi bi-threads"></i></a></li>
                         <li><a href="https://www.strava.com/clubs/47387" target="_blank"><i class="bi bi-strava"></i></a></li>
+                        <li><a href="https://www.youtube.com/@GosforthHarriers" target="_blank"><i class="bi bi-youtube"></i></a></li>
                     </ul>
                 </div>
                 <div class="col-12 col-md-4 order-3 order-md-2 pt-3 pt-md-0">
@@ -115,6 +115,6 @@
     </div>
     <?php wp_footer(); ?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

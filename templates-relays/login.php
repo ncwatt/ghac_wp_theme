@@ -188,6 +188,24 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
                 </form>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="advert-before">Advert</div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3066787831298040" crossorigin="anonymous"></script>
+                <!-- GHAC Responsive Ad -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-3066787831298040"
+                    data-ad-slot="8378213731"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true">
+                </ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <div class="advert-after"></div>
+            </div>
+        </div>
     </div>
 </div>
 <?php get_footer(); ?>

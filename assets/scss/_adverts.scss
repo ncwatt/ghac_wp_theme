@@ -31,3 +31,9 @@
     height: 1px;
     margin: 0.75rem 0 0 0;
 }
+
+iframe[src*="googleads"] {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow: hidden;
+}

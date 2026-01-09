@@ -1,0 +1,38 @@
+ul.link-list {
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+    }
+
+    li::before {
+        font-family: "bootstrap-icons";
+        font-size: 25px;
+        margin: 0 8px 0 8px;
+    }
+
+    li.link-list-pdf::before {
+        content: "\F756"; /* icon code */
+    }
+
+    li.link-list-word::before {
+        content: "\F745"; /* icon code */
+    }
+
+    li.link-list-excel::before {
+        content: "\F793"; /* icon code */
+    }
+
+    li.link-list-powerpoint::before {
+        content: "\F792"; /* icon code */   
+    }
+
+    li:not(:last-child) {
+        border-bottom: 1px $color4 solid;
+        padding: 0 0 0.5em 0;
+        margin: 0 0 0.5em 0;
+    }
+}

@@ -30,8 +30,7 @@ if ( ! function_exists( 'ghac_setup' ) ) :
       array (
         'unauth-menu' => __('Unauthenticated Menu', 'ghac'),
         'auth-menu' => __('Authenticated Menu', 'ghac'),
-        'useful-links' => __('Useful Links', 'ghac'),
-        'about-section' => __('About Section', 'ghac')
+        'useful-links' => __('Useful Links', 'ghac')
       )
     );
   }
@@ -41,7 +40,7 @@ add_action( 'after_setup_theme', 'ghac_setup' );
 // Add the stylesheets
 if ( ! function_exists( 'ghac_load_stylesheets' ) ) :
   function ghac_load_stylesheets() {
-    wp_enqueue_style( 'styles', get_template_directory_uri() . '/assets/css/styles.min.css', '', '0.1.14', 'all' );
+    wp_enqueue_style( 'styles', get_template_directory_uri() . '/assets/css/styles.min.css', '', '0.1.19', 'all' );
   }
 endif;
 add_action( 'wp_enqueue_scripts', 'ghac_load_stylesheets' );
@@ -49,7 +48,7 @@ add_action( 'wp_enqueue_scripts', 'ghac_load_stylesheets' );
 // Add the javascript
 if ( ! function_exists( 'ghac_load_javascript' ) ) :
   function ghac_load_javascript() {
-    wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/guess-the-name-of-the-bunny.js', '', '0.1.0', 'all' );
+    //wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/guess-the-name-of-the-bunny.js', '', '0.1.0', 'all' );
   }
 endif;
 add_action( 'wp_enqueue_scripts', 'ghac_load_javascript' );
@@ -73,6 +72,30 @@ if ( ! function_exists( 'ghac_register_widgets' ) ) :
       array(
           'name' => 'Club Records Widget',
           'id' => 'club-records-widget',
+          'class' => '',
+          'before_widget' => '',
+          'after_widget' => '',
+          'before_title' => '<h4>',
+          'after_title' => '</h4>'
+      )
+    );
+
+    register_sidebar(
+      array(
+          'name' => 'Join Us Widget',
+          'id' => 'join-us-widget',
+          'class' => '',
+          'before_widget' => '',
+          'after_widget' => '',
+          'before_title' => '<h4>',
+          'after_title' => '</h4>'
+      )
+    );
+
+    register_sidebar(
+      array(
+          'name' => 'About Us Widget',
+          'id' => 'about-us-widget',
           'class' => '',
           'before_widget' => '',
           'after_widget' => '',
@@ -137,7 +160,8 @@ if ( ! function_exists( 'get_page_permalink_by_pageslug' ) ):
   }
 endif;
 
-include get_template_directory() . "/functions/guess-the-name-of-the-bunny.php";
+include get_template_directory() . "/functions/events.php";
+include get_template_directory() . "/functions/guess-the-name-of-the-ghost.php";
 include get_template_directory() . "/functions/navigation.php";
 include get_template_directory() . "/functions/posts.php";
 include get_template_directory() . "/functions/users.php";

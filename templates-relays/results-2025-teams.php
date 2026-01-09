@@ -1,9 +1,9 @@
 <?php 
 /*
-	Template Name: Summer Relays - Results (Teams)
+	Template Name: Summer Relays 2025 - Results (Teams)
 */
 
-$teams = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamStatus > 1 ORDER BY TeamStatus DESC, TeamTime ASC" ) );
+$teams = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamStatus > 1 ORDER BY TeamStatus DESC, TeamTime ASC" ) );
 $overall_pos = 1;
 $filter_pos = 1;
 ?>
@@ -13,15 +13,18 @@ $filter_pos = 1;
 		<div class="row">
 			<div class="col-12">
 				<h1><?php the_title(); ?></h1>
+                <div class="alert alert-danger">
+                    <p style="text-align: center;">Results are provisional and amendments may be made whilst this message is displayed.</p>
+                </div>
                 <div class="alert alert-info">
                     <p>Click on the team names to display more details. Or click one of the buttons below to access alternative results views.</p>
                 </div>
                 <p>
-                    <a href="#" class="btn btn-secondary">Teams (Condensed View)</a>&nbsp;&nbsp;
-					<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-full' ); ?>" class="btn btn-primary">Teams (Full View)</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-individuals' ); ?>" class="btn btn-primary">Individuals</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-junior-races' ); ?>" class="btn btn-primary">Junior Races</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-leaderboards' ); ?>" class="btn btn-primary">Leaderboards</a>
+                    <a href="#" class="btn btn-secondary mb-1">Teams (Condensed View)</a>&nbsp;&nbsp;
+					<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-full' ); ?>" class="btn btn-primary mb-1">Teams (Full View)</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-individuals' ); ?>" class="btn btn-primary mb-1">Individuals</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-junior-races' ); ?>" class="btn btn-primary mb-1">Junior Races</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-leaderboards' ); ?>" class="btn btn-primary mb-1">Leaderboards</a>
 				</p>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -84,8 +87,8 @@ $filter_pos = 1;
                                                 <tr>
                                                     <th>Leg</th>
                                                     <th>Name</th>
-                                                    <th>Category</th>
-                                                    <th>Age Band</th>
+                                                    <th>Gender</th>
+                                                    <th>Age Category</th>
                                                     <th>Leg Time</th>
                                                     <th>Gun Time</th>
                                                 </tr>
@@ -93,24 +96,48 @@ $filter_pos = 1;
                                             <tbody>
                                                 <tr>
                                                     <td>A</td>
-                                                    <td><?php echo $row->RunnerA; ?></td>
-                                                    <td><?php echo $row->RunnerACategory; ?></td>
+                                                    <td>
+                                                        <?php 
+											                if ( ( ( !isset( $row->RunnerAFirstName ) ) || ( $row->RunnerAFirstName == "" ) ) && ( ( !isset( $row->RunnerALastName ) ) || ( $row->RunnerALastName == "" ) ) ) {
+												                echo "Name Required";
+											                } else {
+												                echo $row->RunnerAFirstName . " " . $row->RunnerALastName;
+											                }
+										                ?>
+                                                    </td>
+                                                    <td><?php echo $row->RunnerAGender; ?></td>
                                                     <td><?php echo $row->RunnerAAge; ?></td>
                                                     <td><?php echo $row->RunnerALegTime; ?></td>
                                                     <td><?php echo $row->RunnerATime; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>B</td>
-                                                    <td><?php echo $row->RunnerB; ?></td>
-                                                    <td><?php echo $row->RunnerBCategory; ?></td>
+                                                    <td>
+                                                        <?php 
+											                if ( ( ( !isset( $row->RunnerBFirstName ) ) || ( $row->RunnerBFirstName == "" ) ) && ( ( !isset( $row->RunnerBLastName ) ) || ( $row->RunnerBLastName == "" ) ) ) {
+												                echo "Name Required";
+											                } else {
+												                echo $row->RunnerBFirstName . " " . $row->RunnerBLastName;
+											                }
+										                ?>
+                                                    </td>
+                                                    <td><?php echo $row->RunnerBGender; ?></td>
                                                     <td><?php echo $row->RunnerBAge; ?></td>
                                                     <td><?php echo $row->RunnerBLegTime; ?></td>
                                                     <td><?php echo $row->RunnerBTime; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>C</td>
-                                                    <td><?php echo $row->RunnerC; ?></td>
-                                                    <td><?php echo $row->RunnerCCategory; ?></td>
+                                                    <td>
+                                                        <?php 
+											                if ( ( ( !isset( $row->RunnerCFirstName ) ) || ( $row->RunnerCFirstName == "" ) ) && ( ( !isset( $row->RunnerCLastName ) ) || ( $row->RunnerCLastName == "" ) ) ) {
+												                echo "Name Required";
+											                } else {
+												                echo $row->RunnerCFirstName . " " . $row->RunnerCLastName;
+											                }
+										                ?>
+                                                    </td>
+                                                    <td><?php echo $row->RunnerCGender; ?></td>
                                                     <td><?php echo $row->RunnerCAge; ?></td>
                                                     <td><?php echo $row->RunnerCLegTime; ?></td>
                                                     <td><?php echo $row->RunnerCTime; ?></td>
@@ -137,6 +164,24 @@ $filter_pos = 1;
                 <div>
 
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="advert-before">Advert</div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3066787831298040" crossorigin="anonymous"></script>
+                <!-- GHAC Responsive Ad -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-3066787831298040"
+                    data-ad-slot="8378213731"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true">
+                </ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <div class="advert-after"></div>
             </div>
         </div>
     </div>

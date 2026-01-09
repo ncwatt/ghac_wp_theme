@@ -1,0 +1,167 @@
+<?php
+/**
+ * Wrapper for Guess the name of the ghost functionality
+ * 
+ * @package GHAC
+ * @since GHAC 0.1
+ * 
+ */
+
+// register shortcodes
+add_shortcode('ghac_guess_the_name_of_the_ghost', 'ghac_guess_the_name_of_the_ghost');
+
+function ghac_guess_the_name_of_the_ghost( $attributes, $content = null ) {
+    // String to hold the HTML markup to return
+    $htmlOutput = "<style>\n";
+    $htmlOutput .= "    .video-container {\n";
+    $htmlOutput .= "        position: relative;\n";
+    $htmlOutput .= "        width: 100%;\n";
+    $htmlOutput .= "        max-width: 800px;\n";
+    $htmlOutput .= "        margin: auto;\n";
+    $htmlOutput .= "    \n}";
+    $htmlOutput .= "    .video-container iframe {\n";
+    $htmlOutput .= "        width: 100%;\n";
+    $htmlOutput .= "        height: 450px;\n";
+    $htmlOutput .= "    \n}";
+    $htmlOutput .= "    .overlay-text {\n";
+    $htmlOutput .= "        position: absolute;\n";
+    $htmlOutput .= "        top: 50%;\n";
+    $htmlOutput .= "        left: 50%;";
+    $htmlOutput .= "        transform: translate(-50%, -50%);\n";
+    $htmlOutput .= "        background-color: rgba(0, 0, 0, 0.6);\n";
+    $htmlOutput .= "        color: white;\n";
+    $htmlOutput .= "        padding: 1rem 2rem;\n";
+    $htmlOutput .= "        border-radius: 8px;\n";
+    $htmlOutput .= "        font-size: 1.6rem;\n";
+    $htmlOutput .= "        text-align: center;\n";
+    $htmlOutput .= "        pointer-events: none;\n";
+    $htmlOutput .= "        min-width: 300px;\n";
+    $htmlOutput .= "    \n}";
+    $htmlOutput .= "    .btn-container {\n";
+    $htmlOutput .= "        text-align: center;\n";
+    $htmlOutput .= "        margin-top: 2rem;\n";
+    $htmlOutput .= "    \n}";
+    $htmlOutput .= "</style>\n";
+    $htmlOutput .= "<div class=\"video-container mt-5\">\n";
+    $htmlOutput .= "    <iframe src=\"https://www.youtube.com/embed/JaFtgkvWDLk?si=WpbAJXLMoxKrmIgA?autoplay=1\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>\n";
+    $htmlOutput .= "    <div id=\"overlay\" class=\"overlay-text\" style=\"display: none;\">Guess the Name of the Ghost<br /><span style=\"font-size: 1rem;\">Winner selected at random</span></div>\n";
+    $htmlOutput .= "</div>\n";
+    $htmlOutput .= "<div class=\"btn-container\">\n";
+    $htmlOutput .= "    <button id=\"showBtn\" class=\"btn btn-primary btn-lg\">Show Overlay</button>\n";
+    $htmlOutput .= "    <button id=\"startBtn\" class=\"btn btn-primary btn-lg\">Pick a Winner</button>\n";
+    $htmlOutput .= "</div>\n";
+    $htmlOutput .= "<script>\n";
+    $htmlOutput .= "    const names = [\n";
+    $htmlOutput .= "        [\"Catherine McTernan\", \"Nyx\"],\n";
+    $htmlOutput .= "        [\"Ciaran Bennison\", \"Cloud\"],\n";
+    $htmlOutput .= "        [\"Michael Ilott\", \"Magmus\"],\n";
+    $htmlOutput .= "        [\"Justine Kilburn\", \"Leo\"],\n";
+    $htmlOutput .= "        [\"Kathryn Nugent\", \"Booberry\"],\n";
+    $htmlOutput .= "        [\"Kathryn Nugent\", \"Percy\"],\n";
+    $htmlOutput .= "        [\"Harry Brown\", \"Ebon\"],\n";
+    $htmlOutput .= "        [\"Harry Brown\", \"Coope\"],\n";
+    $htmlOutput .= "        [\"Harry Brown\", \"Riptide\"],\n";
+    $htmlOutput .= "        [\"Adrian Mitchison\", \"Chalky\"],\n";
+    $htmlOutput .= "        [\"Adrian Mitchison\", \"Nofeet\"],\n";
+    $htmlOutput .= "        [\"Shiully Goffar\", \"Echo\"],\n";
+    $htmlOutput .= "        [\"Sarah Mulholland\", \"Salem\"],\n";
+    $htmlOutput .= "        [\"Alexander Rhodes\", \"Laff\"],\n";
+    $htmlOutput .= "        [\"Cameron Graham\", \"Cypher\"],\n";
+    $htmlOutput .= "        [\"Jack Hickson\", \"Bram\"],\n";
+    $htmlOutput .= "        [\"Carly Krasner\", \"Amity\"],\n";
+    $htmlOutput .= "        [\"Carly Krasner\", \"Azur\"],\n";
+    $htmlOutput .= "        [\"Carly Krasner\", \"Crimson\"],\n";
+    $htmlOutput .= "        [\"Laura Greenhill\", \"Oooky\"],\n";
+    $htmlOutput .= "        [\"Laura Greenhill\", \"Mist\"],\n";
+    $htmlOutput .= "        [\"Dave Powell\", \"Ghouly\"],\n";
+    $htmlOutput .= "        [\"Joanne Y\", \"Spike\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Candy\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Frosty\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Grey\"],\n";
+    $htmlOutput .= "        [\"Katie Saint\", \"Reaper\"],\n";
+    $htmlOutput .= "        [\"Alastair Johnson\", \"Vespa\"],\n";
+    $htmlOutput .= "        [\"Jo Holmes\", \"Fang\"],\n";
+    $htmlOutput .= "        [\"Kristina Kaminsky\", \"Drago\"],\n";
+    $htmlOutput .= "        [\"Vicki Anderson\", \"Luna\"],\n";
+    $htmlOutput .= "        [\"Vicki Anderson\", \"Jasper\"],\n";
+    $htmlOutput .= "        [\"Rebecca McElwee\", \"Soul\"],\n";
+    $htmlOutput .= "        [\"Rebecca McElwee\", \"Button\"],\n";
+    $htmlOutput .= "        [\"Elaine McKechnie\", \"Greedy\"],\n";
+    $htmlOutput .= "        [\"Alice Webster\", \"Ribs\"],\n";
+    $htmlOutput .= "        [\"Rob Webster\", \"Gooey\"],\n";
+    $htmlOutput .= "        [\"Andy Heppell\", \"Banshee\"],\n";
+    $htmlOutput .= "        [\"Andy Heppell\", \"Weeper\"],\n";
+    $htmlOutput .= "        [\"Neil Ramsay\", \"Whitey\"],\n";
+    $htmlOutput .= "        [\"Neil Ramsay\", \"Minnie\"],\n";
+    $htmlOutput .= "        [\"Kevin Spreadbury\", \"Jolly\"],\n";
+    $htmlOutput .= "        [\"Stephen Ridley\", \"Baggy\"],\n";
+    $htmlOutput .= "        [\"Stephen Ridley\", \"Spooks\"],\n";
+    $htmlOutput .= "        [\"Stephen Ridley\", \"Cream\"],\n";
+    $htmlOutput .= "        [\"Sarah Williams\", \"Shadow\"],\n";
+    $htmlOutput .= "        [\"Sarah Williams\", \"Boo\"],\n";
+    $htmlOutput .= "        [\"Irene Ewart\", \"Buster\"],\n";
+    $htmlOutput .= "        [\"Leonie Earnshaw\", \"Beast\"],\n";
+    $htmlOutput .= "        [\"Nick Watt\", \"Willy\"],\n";
+    $htmlOutput .= "        [\"Julia Das\", \"Tricks\"],\n";
+    $htmlOutput .= "        [\"Julia Das\", \"Chupchip\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Chase\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Boo Boo\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Pluto\"],\n";
+    $htmlOutput .= "        [\"Christina Mancini\", \"Sooty\"],\n";
+    $htmlOutput .= "        [\"Emma Ashman\", \"Blair\"],\n";
+    $htmlOutput .= "        [\"Emma Ashman\", \"Nova\"],\n";
+    $htmlOutput .= "        [\"Emma Ashman\", \"Orion\"],\n";
+    $htmlOutput .= "        [\"Justine Kilburn\", \"Angel\"],\n";
+    $htmlOutput .= "        [\"Justine Kilburn\", \"Bones\"],\n";
+    $htmlOutput .= "        [\"Steve Boddy\", \"Greeny\"],\n";
+    $htmlOutput .= "        [\"Helen Watson\", \"Blinky\"],\n";
+    $htmlOutput .= "        [\"Helen Watson\", \"Vortex\"],\n";
+    $htmlOutput .= "        [\"Keely Milligan\", \"Pumpkin\"],\n";
+    $htmlOutput .= "        [\"Lee Anderson\", \"Giggles\"],\n";
+    $htmlOutput .= "        [\"Lee Anderson\", \"Lumia\"],\n";
+    $htmlOutput .= "        [\"Roger Thomas\", \"Aurora\"],\n";
+    $htmlOutput .= "        [\"Claire Wood\", \"Gogo\"],\n";
+    $htmlOutput .= "        [\"Claire Wood\", \"Spirit\"],\n";
+    $htmlOutput .= "        [\"Jo Wraith\", \"Jinx\"],\n";
+    $htmlOutput .= "        [\"Jo Wraith\", \"Scream\"],\n";
+    $htmlOutput .= "        [\"Rohan Gent\", \"Roma\"],\n";
+    $htmlOutput .= "        [\"Anne-Marie Thomas\", \"Raggy\"],\n";
+    $htmlOutput .= "        [\"Sarah Olsen\", \"Devlin\"],\n";
+    $htmlOutput .= "        [\"Leonie Earnshaw\", \"Casper\"]\n";
+    $htmlOutput .= "    ];\n";
+    $htmlOutput .= "    const overlay = document.getElementById('overlay');\n";
+    $htmlOutput .= "    const startBtn = document.getElementById('startBtn');\n";
+    $htmlOutput .= "    const showBtn = document.getElementById('showBtn');\n";
+    $htmlOutput .= "    showBtn.addEventListener('click', () => {\n";
+    $htmlOutput .= "        overlay.style.display = 'block';\n";
+    $htmlOutput .= "    });\n";
+    $htmlOutput .= "    startBtn.addEventListener('click', () => {\n";
+    $htmlOutput .= "        let duration = 15000; // 15 seconds\n";
+    $htmlOutput .= "        let startTime = Date.now();\n";
+    $htmlOutput .= "        let interval = 50; // start fast\n";
+    $htmlOutput .= "        let lastUpdate = 0;\n";
+    $htmlOutput .= "        const updateName = () => {\n";
+    $htmlOutput .= "            let elapsed = Date.now() - startTime;\n";
+    $htmlOutput .= "            let progress = elapsed / duration;\n";
+    $htmlOutput .= "            // Ease-out effect: slow down over time\n";
+    $htmlOutput .= "            interval = 50 + Math.pow(progress, 2) * 1000;\n";
+    $htmlOutput .= "            if (elapsed < duration) {\n";
+    $htmlOutput .= "                if (Date.now() - lastUpdate > interval) {\n";
+    $htmlOutput .= "                    const randomName = names[Math.floor(Math.random() * names.length)];\n";
+    $htmlOutput .= "                    overlay.innerHTML = '<span style=\"font-size: 2rem;\">' + randomName[1] + '</span>';\n";
+    $htmlOutput .= "                    lastUpdate = Date.now();\n";
+    $htmlOutput .= "                }\n";
+    $htmlOutput .= "                requestAnimationFrame(updateName);\n";
+    $htmlOutput .= "            } else {\n";
+    $htmlOutput .= "                // Final winner\n";
+    $htmlOutput .= "                const winner = names[Math.floor(Math.random() * names.length)];\n";
+    $htmlOutput .= "                overlay.innerHTML = '<span style=\"font-size: 2rem;\">' + winner[1] + '</span>' + '<br />🎉 ' + winner[0] + ' 🎉<br /><span style=\"font-size: 1rem;\">Congratulations from Gosforth Harriers &amp; AC<br />£150 Winner!</span>';\n";
+    $htmlOutput .= "                startBtn.disabled = false;\n";
+    $htmlOutput .= "            \n}";
+    $htmlOutput .= "        };\n";
+    $htmlOutput .= "        updateName();\n";
+    $htmlOutput .= "   });\n";
+    $htmlOutput .= "</script>\n";
+
+    return $htmlOutput;
+}

@@ -323,7 +323,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 							'TeamID' => $teamID
 						)
 					);
-					echo $wpdb->last_error;
+					//echo $wpdb->last_error;
 				else:
 					// Update the values
 					$wpdb->update( 
@@ -350,6 +350,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 							'TeamID' => $teamID
 						)
 					);
+					//echo $wpdb->last_error;
 				endif;
 
 				// Redirect back to the teams manager page
@@ -462,7 +463,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 								<div class="card-body">
 									<div class="mb-3 alert alert-info">
 										<p>Adding club contacts will allow them to access the team manager and make changes to the teams they are attached to.</p>
-										<p>Before making changes to contacts, please ensure you have saved any changes to the runner information as it may be lost.</p>
+										<p>Before making changes to contacts, please ensure you have saved any changes to the runner information.</p>
 									</div>
 									<div class="mb-3">
 										<table class="table">

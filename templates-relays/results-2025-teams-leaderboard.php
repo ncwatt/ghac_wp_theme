@@ -1,91 +1,91 @@
 <?php 
 /*
-	Template Name: Summer Relays - Results (Leaderboard)
+	Template Name: Summer Relays 2025 - Results (Leaderboard)
 */
 
-$seniorMensTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_c_teams WHERE Category = 'Senior Mens' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
-$seniorLadiesTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_c_teams WHERE Category = 'Senior Ladies' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
-$veteranMensTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_c_teams WHERE Category = 'Veteran Mens' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
-$veteranLadiesTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_c_teams WHERE Category = 'Veteran Ladies' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
+$seniorMenTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_sr25_teams WHERE Category = 'Senior Men' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
+$seniorLadiesTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_sr25_teams WHERE Category = 'Senior Ladies' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
+$veteranMenTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_sr25_teams WHERE Category = 'Veteran Men' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
+$veteranLadiesTeams = $wpdb->get_results( $wpdb->prepare( "SELECT * from {$wpdb->prefix}ghac_sr25_teams WHERE Category = 'Veteran Ladies' AND TeamTime <> '00:00:00' ORDER BY TeamStatus DESC, TeamTime ASC LIMIT 3;" ) );
 $seniorLadies = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerACategory = 'Senior Ladies' " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Female' AND RunnerAAge = 'Senior' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBCategory = 'Senior Ladies' " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Female' AND RunnerBAge = 'Senior' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCCategory = 'Senior Ladies' " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Female' AND RunnerCAge = 'Senior' " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $seniorMens = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerACategory = 'Senior Mens' " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Male' AND RunnerAAge = 'Senior' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBCategory = 'Senior Mens' " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Male' AND RunnerBAge = 'Senior' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCCategory = 'Senior Mens' " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Male' AND RunnerCAge = 'Senior' " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $veteranLadies = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerACategory = 'Veteran Ladies' " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Female' AND LEFT(RunnerAAge, 1) = 'V' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBCategory = 'Veteran Ladies' " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Female' AND LEFT(RunnerBAge, 1) = 'V' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCCategory = 'Veteran Ladies' " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Female' AND LEFT(RunnerCAge, 1) = 'V' " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $veteranMens = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerACategory = 'Veteran Mens' " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Male' AND LEFT(RunnerAAge, 1) = 'V' " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBCategory = 'Veteran Mens' " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Male' AND LEFT(RunnerBAge, 1) = 'V' " .
      "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCCategory = 'Veteran Mens' " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Male' AND LEFT(RunnerCAge, 1) = 'V' " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $o50Ladies = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAAge = 'Over 50' AND (RunnerACategory = 'Senior Ladies' OR RunnerACategory = 'Veteran Ladies') " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Female' AND RunnerAAgeValue >= 50 " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBAge = 'Over 50' AND (RunnerBCategory = 'Senior Ladies' OR RunnerBCategory = 'Veteran Ladies') " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Female' AND RunnerBAgeValue >= 50 " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCAge = 'Over 50' AND (RunnerCCategory = 'Senior Ladies' OR RunnerCCategory = 'Veteran Ladies') " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Female' AND RunnerCAgeValue >= 50 " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $o50Mens = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAAge = 'Over 50' AND (RunnerACategory = 'Senior Mens' OR RunnerACategory = 'Veteran Mens') " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Male' AND RunnerAAgeValue >= 50 " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBAge = 'Over 50' AND (RunnerBCategory = 'Senior Mens' OR RunnerBCategory = 'Veteran Mens') " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Male' AND RunnerBAgeValue >= 50 " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCAge = 'Over 50' AND (RunnerCCategory = 'Senior Mens' OR RunnerCCategory = 'Veteran Mens') " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Male' AND RunnerCAgeValue >= 50 " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $o60Ladies = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAAge = 'Over 60' AND (RunnerACategory = 'Senior Ladies' OR RunnerACategory = 'Veteran Ladies') " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Female' AND RunnerAAgeValue >=60  " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBAge = 'Over 60' AND (RunnerBCategory = 'Senior Ladies' OR RunnerBCategory = 'Veteran Ladies') " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Female' AND RunnerBAgeValue >=60 " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCAge = 'Over 60' AND (RunnerCCategory = 'Senior Ladies' OR RunnerCCategory = 'Veteran Ladies') " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Female' AND RunnerCAgeValue >=60 " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 $o60Mens = $wpdb->get_results( $wpdb->prepare( 
-    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, RunnerA AS RunnerName, ClubName, RunnerACategory AS Category, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAAge = 'Over 60' AND (RunnerACategory = 'Senior Mens' OR RunnerACategory = 'Veteran Mens') " .
+    "(SELECT CONCAT(TeamNumber, 'A') AS RunnerNumber, TeamID, CONCAT(RunnerAFirstName, ' ', RunnerALastName) AS RunnerName, ClubName, RunnerAGender AS Gender, RunnerAAge AS AgeCategory, RunnerALegTime AS LegTime " . 
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerALegTime <> '00:00:00' AND RunnerAGender = 'Male' AND RunnerAAgeValue >= 60 " .
         "UNION " .
-    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, RunnerB AS RunnerName, ClubName, RunnerBCategory AS Category, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBAge = 'Over 60' AND (RunnerBCategory = 'Senior Mens' OR RunnerBCategory = 'Veteran Mens') " .
+    "SELECT CONCAT(TeamNumber, 'B') AS RunnerNumber, TeamID, CONCAT(RunnerBFirstName, ' ', RunnerBLastName) AS RunnerName, ClubName, RunnerBGender AS Gender, RunnerBAge AS AgeCategory, RunnerBLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerBLegTime <> '00:00:00' AND RunnerBGender = 'Male' AND RunnerBAgeValue >= 60 " .
     "UNION " .
-    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, RunnerC AS RunnerName, ClubName, RunnerCCategory AS Category, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
-    "FROM {$wpdb->prefix}ghac_c_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCAge = 'Over 60' AND (RunnerCCategory = 'Senior Mens' OR RunnerCCategory = 'Veteran Mens') " . 
+    "SELECT CONCAT(TeamNumber, 'C') AS RunnerNumber, TeamID, CONCAT(RunnerCFirstName, ' ', RunnerCLastName) AS RunnerName, ClubName, RunnerCGender AS Gender, RunnerCAge AS AgeCategory, RunnerCLegTime AS LegTime " .
+    "FROM {$wpdb->prefix}ghac_sr25_teams WHERE RunnerCLegTime <> '00:00:00' AND RunnerCGender = 'Male' AND RunnerCAgeValue >= 60 " . 
     "ORDER BY LegTime ASC) LIMIT 3;" ) );
 ?>
 <?php get_header(); ?>
@@ -94,15 +94,18 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
 		<div class="row">
 			<div class="col-12">
 				<h1><?php the_title(); ?></h1>
+                <div class="alert alert-danger">
+                    <p style="text-align: center;">Results are provisional and amendments may be made whilst this message is displayed.</p>
+                </div>
                 <div class="alert alert-info">
                     <p>Click one of the buttons below to access alternative results views.</p>
                 </div>
                 <p>
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-condensed' ); ?>" class="btn btn-primary">Teams (Condensed View)</a>&nbsp;&nbsp;
-					<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-full' ); ?>" class="btn btn-primary">Teams (Full View)</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-individuals' ); ?>" class="btn btn-primary">Individuals</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-junior-races' ); ?>" class="btn btn-primary">Junior Races</a>&nbsp;&nbsp;
-                    <a href="#" class="btn btn-secondary">Leaderboards</a>
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-condensed' ); ?>" class="btn btn-primary mb-1">Teams (Condensed View)</a>&nbsp;&nbsp;
+					<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-full' ); ?>" class="btn btn-primary mb-1">Teams (Full View)</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-individuals' ); ?>" class="btn btn-primary mb-1">Individuals</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-junior-races' ); ?>" class="btn btn-primary mb-1">Junior Races</a>&nbsp;&nbsp;
+                    <a href="#" class="btn btn-secondary mb-1">Leaderboards</a>
 				</p>
                 <h2>Senior Ladies (Teams)</h2>
                 <?php $overall_pos = 1; ?>
@@ -178,7 +181,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
-                <h2 class="pt-5">Senior Mens (Teams)</h2>
+                <h2 class="pt-5">Senior Men (Teams)</h2>
                 <?php $overall_pos = 1; ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -193,7 +196,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($seniorMensTeams as $row) : ?>
+                            <?php foreach($seniorMenTeams as $row) : ?>
                                 <tr>
                                     <td><?php echo $overall_pos; ?></td>
                                     <td>
@@ -326,7 +329,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
-                <h2 class="pt-5">Veteran Mens (Teams)</h2>
+                <h2 class="pt-5">Veteran Men (Teams)</h2>
                 <?php $overall_pos = 1; ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -341,7 +344,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($veteranMensTeams as $row) : ?>
+                            <?php foreach($veteranMenTeams as $row) : ?>
                                 <tr>
                                     <td><?php echo $overall_pos; ?></td>
                                     <td>
@@ -442,7 +445,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
-                <h2 class="pt-5">Senior Mens (Individuals)</h2>
+                <h2 class="pt-5">Senior Men (Individuals)</h2>
                 <?php $overall_pos = 1; ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -526,7 +529,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
-                <h2 class="pt-5">Veteran Mens (Individuals)</h2>
+                <h2 class="pt-5">Veteran Men (Individuals)</h2>
                 <?php $overall_pos = 1; ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -610,7 +613,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
-                <h2 class="pt-5">Over 50 Mens (Individuals)</h2>
+                <h2 class="pt-5">Over 50 Men (Individuals)</h2>
                 <?php $overall_pos = 1; ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -694,7 +697,7 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
-                <h2 class="pt-5">Over 60 Mens (Individuals)</h2>
+                <h2 class="pt-5">Over 60 Men (Individuals)</h2>
                 <?php $overall_pos = 1; ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -736,6 +739,24 @@ $o60Mens = $wpdb->get_results( $wpdb->prepare(
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="advert-before">Advert</div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3066787831298040" crossorigin="anonymous"></script>
+                <!-- GHAC Responsive Ad -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-3066787831298040"
+                    data-ad-slot="8378213731"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true">
+                </ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <div class="advert-after"></div>
             </div>
         </div>
     </div>

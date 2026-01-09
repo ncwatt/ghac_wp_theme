@@ -19,7 +19,8 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 				<?php if ( is_user_in_role( 'administrator' ) ) : ?>
 					<p>
 						<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/add-team' ) ?>" class="btn btn-primary">Add Team</a>&nbsp;&nbsp;
-						<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/add-time' ) ?>" class="btn btn-primary">Add Times</a>
+						<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/add-times' ) ?>" class="btn btn-primary">Add Times</a>&nbsp;&nbsp;
+						<a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-condensed/' ) ?>" class="btn btn-primary">Results</a>
 					</p>
 				<?php endif; ?>
 				<div class="table-responsive">
@@ -102,7 +103,13 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 										<td><?php echo $row->TeamTime; ?></td>
 									<?php endif; ?>
 									<td>
-										<?php echo $row->RunnerAFirstName . " " . $row->RunnerALastName; ?>
+										<?php 
+											if ( ( ( !isset( $row->RunnerAFirstName ) ) || ( $row->RunnerAFirstName == "" ) ) && ( ( !isset( $row->RunnerALastName ) ) || ( $row->RunnerALastName == "" ) ) ) {
+												echo "Name Required";
+											} else {
+												echo $row->RunnerAFirstName . " " . $row->RunnerALastName;
+											}
+										?>
 										<sup>
 											<?php 
 												switch ( $row->RunnerAGender ) {
@@ -111,6 +118,9 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 														break;
 													case "Male":
 														echo " (M";
+														break;
+													case "Not Selected":
+														echo " (U";
 														break;
 													default:
 														"";
@@ -152,6 +162,9 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 													case "V85":
 														echo "V85)";
 														break;
+													case "Not Selected":
+														echo "U)";
+														break;
 													default:
 														echo "";
 												}
@@ -159,7 +172,13 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 										</sup>
 									</td>
 									<td>
-										<?php echo $row->RunnerBFirstName . " " . $row->RunnerBLastName; ?>
+										<?php 
+											if ( ( ( !isset( $row->RunnerBFirstName ) ) || ( $row->RunnerBFirstName == "" ) ) && ( ( !isset( $row->RunnerBLastName ) ) || ( $row->RunnerBLastName == "" ) ) ) {
+												echo "Name Required";
+											} else {
+												echo $row->RunnerBFirstName . " " . $row->RunnerBLastName;
+											}
+										?>
 										<sup>
 											<?php 
 												switch ( $row->RunnerBGender ) {
@@ -168,6 +187,9 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 														break;
 													case "Male":
 														echo " (M";
+														break;
+													case "Not Selected":
+														echo " (U";
 														break;
 													default:
 														"";
@@ -209,6 +231,9 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 													case "V85":
 														echo "V85)";
 														break;
+													case "Not Selected":
+														echo "U)";
+														break;
 													default:
 														echo "";
 												}
@@ -216,7 +241,13 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 										</sup>
 									</td>
 									<td>
-										<?php echo $row->RunnerCFirstName . " " . $row->RunnerCLastName; ?>
+										<?php 
+											if ( ( ( !isset( $row->RunnerCFirstName ) ) || ( $row->RunnerCFirstName == "" ) ) && ( ( !isset( $row->RunnerCLastName ) ) || ( $row->RunnerCLastName == "" ) ) ) {
+												echo "Name Required";
+											} else {
+												echo $row->RunnerCFirstName . " " . $row->RunnerCLastName;
+											}
+										?>
 										<sup>
 											<?php 
 												switch ( $row->RunnerCGender ) {
@@ -225,6 +256,9 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 														break;
 													case "Male":
 														echo " (M";
+														break;
+													case "Not Selected":
+														echo " (U";
 														break;
 													default:
 														"";
@@ -265,6 +299,9 @@ if ( is_user_in_role( 'subscriber' ) ) { $isSubscriber = true; } else { $isSubsc
 														break;
 													case "V85":
 														echo "V85)";
+														break;
+													case "Not Selected":
+														echo "U)";
 														break;
 													default:
 														echo "";

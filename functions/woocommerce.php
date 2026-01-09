@@ -6,13 +6,13 @@
     //echo "<pre>" . print_r($fields) . "</pre>";
     return $fields;
   }
-  add_filter( 'woocommerce_checkout_fields' , 'wc_override_checkout_fields' );
+  //add_filter( 'woocommerce_checkout_fields' , 'wc_override_checkout_fields' );
   
   function wc_form_field_args($args, $key, $value) {
     $args['input_class'] = array( 'form-control' );
     return $args;
   }
-  add_filter('woocommerce_form_field_args',  'wc_form_field_args', 10, 3);
+  //add_filter('woocommerce_form_field_args',  'wc_form_field_args', 10, 3);
   
   function wpauthors_external_add_to_cart_link() {
     global $product;
@@ -30,8 +30,8 @@
     echo "</p>";
     do_action( 'woocommerce_after_add_to_cart_button' );
   }
-  remove_action( 'woocommerce_external_add_to_cart', 'woocommerce_external_add_to_cart', 30 );
-  add_action( 'woocommerce_external_add_to_cart', 'wpauthors_external_add_to_cart_link', 30 );
+  //remove_action( 'woocommerce_external_add_to_cart', 'woocommerce_external_add_to_cart', 30 );
+  //add_action( 'woocommerce_external_add_to_cart', 'wpauthors_external_add_to_cart_link', 30 );
   
   if ( ! function_exists( 'woocommerce_checkout_field_club' ) ):
     function woocommerce_checkout_field_club() {

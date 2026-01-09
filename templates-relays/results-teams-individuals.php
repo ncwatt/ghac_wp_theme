@@ -17,7 +17,7 @@ $overall_pos = 1;
 $filter_pos = 1;
 ?>
 <?php get_header(); ?>
-<div class="content-1">
+<div class="page-padding content-1">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">

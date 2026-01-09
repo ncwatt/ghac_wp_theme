@@ -1,9 +1,9 @@
 <?php 
 /*
-	Template Name: Summer Relays - Results (Teams) - Full
+	Template Name: Summer Relays 2025 - Results (Teams) - Full
 */
 
-$teams = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamStatus > 1 ORDER BY TeamStatus DESC, TeamTime ASC" ) );
+$teams = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamStatus > 1 ORDER BY TeamStatus DESC, TeamTime ASC" ) );
 $overall_pos = 1;
 $filter_pos = 1;
 ?>
@@ -13,15 +13,18 @@ $filter_pos = 1;
 		<div class="row">
 			<div class="col-12">
 				<h1><?php the_title(); ?></h1>
+                <div class="alert alert-danger">
+                    <p style="text-align: center;">Results are provisional and amendments may be made whilst this message is displayed.</p>
+                </div>
                 <div class="alert alert-info">
                     <p>Click one of the buttons below to access alternative results views.</p>
                 </div>
                 <p>
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-condensed' ); ?>" class="btn btn-primary">Teams (Condensed View)</a>&nbsp;&nbsp;
-					<a href="#" class="btn btn-secondary">Teams (Full View)</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-individuals' ); ?>" class="btn btn-primary">Individuals</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-junior-races' ); ?>" class="btn btn-primary">Junior Races</a>&nbsp;&nbsp;
-                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-relay-teams-leaderboards' ); ?>" class="btn btn-primary">Leaderboards</a>
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-condensed' ); ?>" class="btn btn-primary mb-1">Teams (Condensed View)</a>&nbsp;&nbsp;
+					<a href="#" class="btn btn-secondary mb-1">Teams (Full View)</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-individuals' ); ?>" class="btn btn-primary mb-1">Individuals</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-junior-races' ); ?>" class="btn btn-primary mb-1">Junior Races</a>&nbsp;&nbsp;
+                    <a href="<?php echo get_page_permalink_by_pageslug( 'summer-relays/results-2025-relay-teams-leaderboards' ); ?>" class="btn btn-primary mb-1">Leaderboards</a>
 				</p>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -67,14 +70,17 @@ $filter_pos = 1;
                                                 case 'Senior Ladies':
                                                     echo 'SL';
                                                     break;
-                                                case 'Senior Mens':
+                                                case 'Senior Men':
                                                     echo 'SM';
                                                     break;
                                                 case 'Veteran Ladies':
                                                     echo 'VL';
                                                     break;
-                                                case 'Veteran Mens':
+                                                case 'Veteran Men':
                                                     echo 'VM';
+                                                    break;
+                                                case 'Uncategorised':
+                                                    echo 'U';
                                                     break;
                                                 default:
                                             }
@@ -112,38 +118,67 @@ $filter_pos = 1;
                                         ?>
                                     </td>
                                     <td>
-                                        <?php echo ( $row->RunnerA ); ?>
+                                        <?php 
+											if ( ( ( !isset( $row->RunnerAFirstName ) ) || ( $row->RunnerAFirstName == "" ) ) && ( ( !isset( $row->RunnerALastName ) ) || ( $row->RunnerALastName == "" ) ) ) {
+												echo "Name Required";
+											} else {
+												echo $row->RunnerAFirstName . " " . $row->RunnerALastName;
+											}
+										?>
                                         <sup>
 											<?php 
-												switch ( $row->RunnerACategory ) {
-													case "Senior Ladies":
-														echo " (SF)";
+												switch ( $row->RunnerAGender ) {
+													case "Female":
+														echo " (F";
 														break;
-													case "Senior Mens":
-														echo " (SM)";
+													case "Male":
+														echo " (M";
 														break;
-													case "Veteran Ladies":
-														echo " (VF)";
-														break;
-													case "Veteran Mens":
-														echo " (VM)";
+													case "Not Selected":
+														echo " (U";
 														break;
 													default:
 														"";
 												}	
-											?>
-										</sup>
-										<sup>
-											<?php 
 												switch ( $row->RunnerAAge ) {
-													case "Under 50":
-														echo "";
+													case "Senior":
+														echo "S)";
 														break;
-													case "Over 50":
-														echo " (50)";
+													case "V35":
+														echo "V35)";
 														break;
-													case "Over 60":
-														echo " (60)";
+													case "V40":
+														echo "V40)";
+														break;
+													case "V45":
+														echo "V45)";
+														break;
+													case "V50":
+														echo "V50)";
+														break;
+													case "V55":
+														echo "V55)";
+														break;
+													case "V60":
+														echo "V60)";
+														break;
+													case "V65":
+														echo "V65)";
+														break;
+													case "V70":
+														echo "V70)";
+														break;
+													case "V75":
+														echo "V75)";
+														break;
+													case "V80":
+														echo "V80)";
+														break;
+													case "V85":
+														echo "V85)";
+														break;
+													case "Not Selected":
+														echo "U)";
 														break;
 													default:
 														echo "";
@@ -153,38 +188,67 @@ $filter_pos = 1;
                                     </td>
                                     <td><?php echo ( $row->RunnerALegTime ); ?></td>
                                     <td>
-                                        <?php echo ( $row->RunnerB ); ?>
+                                        <?php 
+											if ( ( ( !isset( $row->RunnerBFirstName ) ) || ( $row->RunnerBFirstName == "" ) ) && ( ( !isset( $row->RunnerBLastName ) ) || ( $row->RunnerBLastName == "" ) ) ) {
+												echo "Name Required";
+											} else {
+												echo $row->RunnerBFirstName . " " . $row->RunnerBLastName;
+											}
+										?>
                                         <sup>
 											<?php 
-												switch ( $row->RunnerBCategory ) {
-													case "Senior Ladies":
-														echo " (SF)";
+												switch ( $row->RunnerBGender ) {
+													case "Female":
+														echo " (F";
 														break;
-													case "Senior Mens":
-														echo " (SM)";
+													case "Male":
+														echo " (M";
 														break;
-													case "Veteran Ladies":
-														echo " (VF)";
-														break;
-													case "Veteran Mens":
-														echo " (VM)";
+													case "Not Selected":
+														echo " (U";
 														break;
 													default:
-														echo "";
+														"";
 												}
-											?>
-										</sup>
-										<sup>
-											<?php 
 												switch ( $row->RunnerBAge ) {
-													case "Under 50":
-														echo "";
+													case "Senior":
+														echo "S)";
 														break;
-													case "Over 50":
-														echo " (50)";
+													case "V35":
+														echo "V35)";
 														break;
-													case "Over 60":
-														echo " (60)";
+													case "V40":
+														echo "V40)";
+														break;
+													case "V45":
+														echo "V45)";
+														break;
+													case "V50":
+														echo "V50)";
+														break;
+													case "V55":
+														echo "V55)";
+														break;
+													case "V60":
+														echo "V60)";
+														break;
+													case "V65":
+														echo "V65)";
+														break;
+													case "V70":
+														echo "V70)";
+														break;
+													case "V75":
+														echo "V75)";
+														break;
+													case "V80":
+														echo "V80)";
+														break;
+													case "V85":
+														echo "V85)";
+														break;
+													case "Not Selected":
+														echo "U)";
 														break;
 													default:
 														echo "";
@@ -194,38 +258,67 @@ $filter_pos = 1;
                                     </td>
                                     <td><?php echo ( $row->RunnerBLegTime ); ?></td>
                                     <td>
-                                        <?php echo ( $row->RunnerC ); ?>
+                                        <?php 
+											if ( ( ( !isset( $row->RunnerCFirstName ) ) || ( $row->RunnerCFirstName == "" ) ) && ( ( !isset( $row->RunnerCLastName ) ) || ( $row->RunnerCLastName == "" ) ) ) {
+												echo "Name Required";
+											} else {
+												echo $row->RunnerCFirstName . " " . $row->RunnerCLastName;
+											}
+										?>  
                                         <sup>
 											<?php 
-												switch ( $row->RunnerCCategory ) {
-													case "Senior Ladies":
-														echo " (SF)";
+												switch ( $row->RunnerCGender ) {
+													case "Female":
+														echo " (F";
 														break;
-													case "Senior Mens":
-														echo " (SM)";
+													case "Male":
+														echo " (M";
 														break;
-													case "Veteran Ladies":
-														echo " (VF)";
-														break;
-													case "Veteran Mens":
-														echo " (VM)";
+													case "Not Selected":
+														echo " (U";
 														break;
 													default:
-														echo "";
+														"";
 												}
-											?>
-										</sup>
-										<sup>
-											<?php 
 												switch ( $row->RunnerCAge ) {
-													case "Under 50":
-														echo "";
+													case "Senior":
+														echo "S)";
 														break;
-													case "Over 50":
-														echo " (50)";
+													case "V35":
+														echo "V35)";
 														break;
-													case "Over 60":
-														echo " (60)";
+													case "V40":
+														echo "V40)";
+														break;
+													case "V45":
+														echo "V45)";
+														break;
+													case "V50":
+														echo "V50)";
+														break;
+													case "V55":
+														echo "V55)";
+														break;
+													case "V60":
+														echo "V60)";
+														break;
+													case "V65":
+														echo "V65)";
+														break;
+													case "V70":
+														echo "V70)";
+														break;
+													case "V75":
+														echo "V75)";
+														break;
+													case "V80":
+														echo "V80)";
+														break;
+													case "V85":
+														echo "V85)";
+														break;
+													case "Not Selected":
+														echo "U)";
 														break;
 													default:
 														echo "";
@@ -247,6 +340,24 @@ $filter_pos = 1;
                 <div>
 
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="advert-before">Advert</div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3066787831298040" crossorigin="anonymous"></script>
+                <!-- GHAC Responsive Ad -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-3066787831298040"
+                    data-ad-slot="8378213731"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true">
+                </ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <div class="advert-after"></div>
             </div>
         </div>
     </div>

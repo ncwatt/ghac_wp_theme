@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
@@ -52,6 +53,12 @@
   border-top: 1px solid #dfdfdf;
   height: 1px;
   margin: 0.75rem 0 0 0;
+}
+
+iframe[src*=googleads] {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow: hidden;
 }
 
 .home-carousel figure {
@@ -113,6 +120,38 @@
   margin: auto 0 auto 0;
   max-width: 150px;
   max-height: 150px;
+}
+
+ul.link-list {
+  margin: 0;
+  padding: 0;
+}
+ul.link-list li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+ul.link-list li::before {
+  font-family: "bootstrap-icons";
+  font-size: 25px;
+  margin: 0 8px 0 8px;
+}
+ul.link-list li.link-list-pdf::before {
+  content: "\f756"; /* icon code */
+}
+ul.link-list li.link-list-word::before {
+  content: "\f745"; /* icon code */
+}
+ul.link-list li.link-list-excel::before {
+  content: "\f793"; /* icon code */
+}
+ul.link-list li.link-list-powerpoint::before {
+  content: "\f792"; /* icon code */
+}
+ul.link-list li:not(:last-child) {
+  border-bottom: 1px #dfdfdf solid;
+  padding: 0 0 0.5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 body {
@@ -188,7 +227,6 @@ button.icon-button, button.icon-button:active, button.icon-button:hover, button.
 
 h1 {
   font-family: "Heebo", sans-serif;
-  font-size: 2rem;
   font-weight: 200;
 }
 
@@ -197,6 +235,17 @@ h2 {
   font-weight: 200;
 }
 
+h2.column-title {
+  font-family: "Heebo", sans-serif;
+  font-size: calc(1.375rem + 1.5vw);
+  font-weight: 200;
+}
+
+@media (min-width: 1200px) {
+  h2.column-title {
+    font-size: 2.5rem;
+  }
+}
 h3 {
   font-family: "Heebo", sans-serif;
   font-weight: 200;
@@ -230,6 +279,12 @@ p.synopsis {
 }
 .accordion-header .collapsed {
   background-color: #ffffff;
+}
+
+.blockquote {
+  border-left: 2px solid #4d4d4d; /* Bootstrap’s gray-600 */
+  padding-left: 1rem; /* space between line and text */
+  margin-left: 0; /* optional: align with container */
 }
 
 .content-1 {
@@ -403,4 +458,9 @@ p.synopsis {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.tribe-events-event-image {
+  max-width: 100% !important;
+  height: auto !important;
 }/*# sourceMappingURL=styles.css.map */

@@ -30,7 +30,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 			if ( is_numeric( $teamNum ) ) {
 				$teamNum = $teamNum + 0; // Converts the value to a number
 				// Get the team
-				$team = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_c_teams WHERE TeamNumber = %d", $teamNum ) );
+				$team = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}ghac_sr25_teams WHERE TeamNumber = %d", $teamNum ) );
 				if ( isset( $team ) ) {
 					$teamID = $team->TeamID;
 					$teamName = $team->TeamName;
@@ -142,7 +142,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 		// Update the values
 		$wpdb->update( 
-			"{$wpdb->prefix}ghac_c_teams", 
+			"{$wpdb->prefix}ghac_sr25_teams", 
 			array(
 				'RunnerATime' => $runnerATime,
 				'RunnerALegTime' => $runnerALegTime,
@@ -166,7 +166,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 }
 ?>
 <?php get_header(); ?>
-<div class="content-1">
+<div class="page-padding content-1">
 	<div class="container">
 		<div class="row">
 			<div class="col">
